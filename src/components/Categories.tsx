@@ -16,7 +16,7 @@ const Categories = () => {
   ];
 
   return (
-    <nav style={{ height: "50px", marginBottom: "60px" }}>
+    <nav style={{width:"90%", height: "50px", marginBottom: "60px" }}>
       <ul
         style={{
           display: "flex",

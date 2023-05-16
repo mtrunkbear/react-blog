@@ -13,7 +13,6 @@ const Posts = (/* { userId, id }: PostsProps */) => {
   const allPosts: any = useFetchPosts();
   let { userId, id: fullPostId } = useParams();
   console.log({ userId, fullPostId });
- 
 
   useEffect(() => {
     if (allPosts) {
@@ -38,7 +37,17 @@ const Posts = (/* { userId, id }: PostsProps */) => {
 
   //console.log({ filteredPosts });
   return (
-    <div style={{ width: "100%", marginBottom: "400px" }}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        width: "100%",
+        marginBottom: "400px",
+        boxSizing: "border-box"
+      }}
+    >
       {filteredPosts &&
         filteredPosts?.map(({ id, title, content }: any) => (
           <Post

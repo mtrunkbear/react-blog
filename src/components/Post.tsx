@@ -9,6 +9,8 @@ import ReactMarkdown from "react-markdown";
 import styled from "styled-components";
 import useNearestElement from "../hooks/useNearestElement";
 import { PostButton } from "./Buttons";
+import { device, size as windowSizes } from "../styles/device";
+import useWindowPosition from "../hooks/useWindowPosition";
 
 const containerToRef = forwardRef(
   ({ className, children, style, key }: any, ref: any) => {
@@ -24,17 +26,20 @@ const Container = styled(containerToRef)`
   position: relative;
   flex-direction: column;
   align-items: center;
-  //justify-content: center;
+  /* //justify-content: center; */
   width: 90%;
   padding: 13px;
   font-family: "Lato", sans-serif;
   background-color: rgba(60, 33, 228, 0.05);
-  height: 400px;
   margin-top: 15px;
+  margin-bottom: 10px;
   text-align: left;
   padding: 30px;
   box-sizing: border-box;
-  border-radius: 60px;
+  border-radius: 40px;
+  height: 400px;
+  border-style: solid none none none;
+  border-color: rgba(48, 55, 48);
 
   transition: all 1250ms cubic-bezier(0.19, 1, 0.22, 1);
   outline: 0.1px solid;
@@ -44,6 +49,13 @@ const Container = styled(containerToRef)`
   cursor: pointer;
   &:hover {
     text-shadow: 1px 1px 2px rgba(84, 227, 70, 1);
+  }
+
+  @media (${device.mobileS}) {
+    height: 300px;
+  }
+  @media (${device.laptop}) {
+    height: 400px;
   }
 `;
 
@@ -77,15 +89,23 @@ const ResultArea = styled.div`
 const Post = ({ title, content, style, id, isFullView = false }: any) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
-
   const postRef = useRef<any>(null);
+
+  const { viewportWidth } = useWindowPosition();
+
   const isNearest: any = useNearestElement(postRef);
-  const slicedContent = isFullView ? content : content.slice(0, 250);
+  const isMobile = viewportWidth <= parseFloat(windowSizes.tablet);
+  const shortenedContent = isMobile
+    ? content.slice(0, 100)
+    : content.slice(0, 250);
+
+  const slicedContent = isFullView ? content : shortenedContent;
+  const fullViewHeight = isFullView ? { height: "100%" } : null;
 
   useEffect(() => {
-    const canControlScrollRestoration = 'scrollRestoration' in window.history
+    const canControlScrollRestoration = "scrollRestoration" in window.history;
     if (canControlScrollRestoration) {
-      window.history.scrollRestoration = 'manual';
+      window.history.scrollRestoration = "manual";
     }
     window.scrollTo(0, 0);
   }, [pathname]);
@@ -94,7 +114,7 @@ const Post = ({ title, content, style, id, isFullView = false }: any) => {
       ref={postRef}
       style={{
         ...style,
-        height: isFullView ? "100%" : "400px",
+        ...fullViewHeight,
         //border: isCentral ? "0.01px solid rgba(60, 33, 228, 0.05)" : "2px solid black",
       }}
     >
@@ -124,7 +144,7 @@ const Post = ({ title, content, style, id, isFullView = false }: any) => {
             fontWeight: 400,
             fontSize: 20,
             marginLeft: "5px",
-            color: "rgba(84, 227, 70, 1)",
+            color: "rgba(84, 227, 70, 0.9)",
           }}
         >
           {title.toUpperCase()}

@@ -4,10 +4,11 @@ import githubIcon from "../assets/github.svg";
 import linkedinIcon from "../assets/linkedin.svg";
 import styled from "styled-components";
 import mail from "../assets/mail.svg";
+import { device } from "../styles/device";
 
 const AutorStyle = styled.div`
   display: flex;
-  border-radius: 42px;
+  border-radius: 32px;
   flex-direction: column;
   height: 370px;
   background-color: rgba(82, 5, 133, 0.4);
@@ -19,6 +20,17 @@ const AutorStyle = styled.div`
   justify-content: space-evenly;
   box-shadow: 12px 13px 16px 2px rgba(0, 0, 0, 0.25);
   border: 1px solid rgba(0, 0, 0, 1);
+
+  @media ${device.mobileS} {
+    height: 200px;
+    flex-direction: row;
+   
+  }
+  @media ${device.laptop} {
+    height: 370px;
+    flex-direction: column;
+   
+  }
 `;
 const AutorDetail = () => {
   return (

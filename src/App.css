@@ -1,6 +1,11 @@
  #root {
- 
-  width: 80%;
+  display: flex;
+  position:static;
+  width: 100%;
   text-align: center;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  box-sizing: border-box;
 }
 

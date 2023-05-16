@@ -87,13 +87,12 @@ const PostButtonStyle = styled.button`
   width: 180px;
   height: 40px;
   bottom: 0px;
-  border: solid 1px rgba(217, 217, 217, 0.3);
+  border: solid 1px rgba(200, 200, 200, 0.3);
   background: rgba(217, 217, 217, 0.03);
-  ##box-shadow: 0px 0px 3px #ffffff;
-  border-radius: 29px;
+  border-radius: 15px;
   transition: all 1250ms cubic-bezier(0.19, 1, 0.22, 1);
   outline: 0.5px solid;
-  outline-color: rgba(255, 255, 255, 0.5);
+  outline-color: rgba(100, 100, 100, 0.5);
   outline-offset: 0px;
   text-shadow: none;
   cursor: pointer;

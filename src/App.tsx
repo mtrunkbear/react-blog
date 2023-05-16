@@ -37,7 +37,7 @@ function App() {
     markdownText,
     setMarkdownText,
   };
-//TODO: handle new post request in hook
+  //TODO: handle new post request in hook
   const handleNewPost = () => {
     if (user) {
       fetch(`${apiUrl}:4000/api/post/`, {
@@ -64,7 +64,14 @@ function App() {
     <EditorContext.Provider value={contextValue}>
       <NavBar />
       <CentralBody>
-        <div style={{ width: "70%", alignItems: "center" }}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            width: "auto",
+            alignItems: "center",
+          }}
+        >
           <Categories />
           {/*TODO: handle routes in a config or something similar to improve cleancode*/}
           <Routes>
