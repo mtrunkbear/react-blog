@@ -5,15 +5,12 @@ import { useState } from "react";
 import { MarkedInput } from "./components/MarkdownInput";
 import { useUserContext } from "./context/userContext";
 import Posts from "./components/Posts";
-import Post from "./components/Post";
 import NavBar from "./components/NavBar";
 import CentralBody from "./components/CentralBody";
 import SideMenu from "./components/SideMenu";
 import Categories from "./components/Categories";
 import { Route, Routes } from "react-router-dom";
-import useWindowPosition from "./hooks/useWindowPosition";
 import styled from "styled-components";
-import { useActualPostContext } from "./context/actualPostContext";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -29,9 +26,10 @@ const Footer = styled.div`
 `;
 
 function App() {
-  const [actualPost, setActualPost] = useActualPostContext();
+  
   const [markdownText, setMarkdownText] = useState<any>("");
   const { user }: any = useUserContext();
+  console.log({user})
 
   const contextValue: contextValue = {
     markdownText,

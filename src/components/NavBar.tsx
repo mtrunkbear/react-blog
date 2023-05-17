@@ -62,7 +62,7 @@ const NavBar = () => {
 };
 
 const Nav = styled.nav`
-  display: flex;  
+  display: flex;
   position: fixed;
   align-items: center;
   justify-content: space-between;
@@ -79,23 +79,25 @@ const Nav = styled.nav`
 
   @media ${device.laptop} {
     width: 1000px;
-  } 
+  }
   @media ${device.laptopL} {
     width: 1300px;
-  } 
+  }
 
- @media ${device.desktop} {
+  @media ${device.desktop} {
     width: 1500px;
-  } 
+  }
 `;
 
 const Title = styled.h1`
-  font-size: 34px;
+  font-size: 20px;
 
   @media ${device.mobileS} {
-    font-size:20px;
+    font-size: 20px;
   }
-
+  @media ${device.laptop} {
+    font-size: 34px;
+  }
 `;
 
 const NavElements = styled.div`

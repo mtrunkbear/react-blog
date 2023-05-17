@@ -5,48 +5,18 @@ import linkedinIcon from "../assets/linkedin.svg";
 import styled from "styled-components";
 import mail from "../assets/mail.svg";
 import { device } from "../styles/device";
+import { useUserContext } from "../context/userContext";
 
-const AutorStyle = styled.div`
-  display: flex;
-  border-radius: 32px;
-  flex-direction: column;
-  height: 370px;
-  background-color: rgba(82, 5, 133, 0.4);
-  align-items: center;
-  padding: 20px;
-  padding-top: 0px;
-  padding-bottom: 5px;
-  box-sizing: border-box;
-  justify-content: space-evenly;
-  box-shadow: 12px 13px 16px 2px rgba(0, 0, 0, 0.25);
-  border: 1px solid rgba(0, 0, 0, 1);
-
-  @media ${device.mobileS} {
-    height: 200px;
-    flex-direction: row;
-   
-  }
-  @media ${device.laptop} {
-    height: 370px;
-    flex-direction: column;
-   
-  }
-`;
 const AutorDetail = () => {
-  return (
+  const { user }: any = useUserContext();
+
+  const { firstName, lastName, occupation, description, id } = user;
+  /*  console.log({ userFromAutor: user });  */
+  return id ? (
     <AutorStyle>
-      <div
-        style={{
-          display: "flex",
-          height: "25px",
-          width: "100%",
-          marginBottom: "-25px",
-          paddingRight: "10px",
-          justifyContent: "flex-end",
-        }}
-      >
+      <AvatarContainer>
         <img width={20} src={mail} />
-      </div>
+      </AvatarContainer>
 
       <CircleButton image={avatar} size={80} />
       <div>
@@ -71,7 +41,7 @@ const AutorDetail = () => {
             color: "rgba(84, 227, 70, 1)",
           }}
         >
-          {"<MiguelTroncoso/>"}
+          {`<${firstName + lastName}/>`}
         </h3>
         <p
           style={{
@@ -83,27 +53,30 @@ const AutorDetail = () => {
             height: 10,
           }}
         >
-          Fullstack Developer
+          {occupation}
         </p>
         <p style={{ fontSize: "12px", fontWeight: 200, textAlign: "justify" }}>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates
-          autem recusandae accusamus alias tempore enim cupiditate consequuntur
+          {/*  Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates
+          autem recusandae accusamus alias tempore enim cupiditate consequuntur */}
+          {description?.slice(0, 180)}
         </p>
       </div>
 
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-evenly",
-          width: "90%",
-        }}
-      >
-        <SocialMedia />
-      </div>
+      <SocialMedia />
     </AutorStyle>
+  ) : (
+    "cargando..."
   );
 };
+
+const AvatarContainer = styled.div`
+  display: flex;
+  height: 25px;
+  width: 100%;
+  margin-bottom: -25px;
+  padding-right: 10px;
+  justify-content: flex-end;
+`;
 
 const SocialMedia = () => {
   const socialMedia = [
@@ -119,29 +92,61 @@ const SocialMedia = () => {
     },
   ];
 
-  const RRSSLink = ({ icon, name, link }: any) => {
-    return (
-      <LinkStyle width={"40%"} href={link} filterColor={"violet"}>
-        <img src={icon} style={{ margin: 0 }} />
-        <p
-          style={{
-            width: "60%",
-            fontSize: "12px",
-            margin: "0",
-          }}
-        >
-          {name}
-        </p>
-      </LinkStyle>
-    );
-  };
   return (
-    <>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-evenly",
+        width: "90%",
+      }}
+    >
       {socialMedia.map(({ link, name, icon }) => (
         <RRSSLink link={link} name={name} icon={icon} />
       ))}
-    </>
+    </div>
   );
 };
+const RRSSLink = ({ icon, name, link }: any) => {
+  return (
+    <LinkStyle width={"40%"} href={link} filterColor={"violet"}>
+      <img src={icon} style={{ margin: 0 }} />
+      <p
+        style={{
+          width: "60%",
+          fontSize: "12px",
+          margin: "0",
+        }}
+      >
+        {name}
+      </p>
+    </LinkStyle>
+  );
+};
+const AutorStyle = styled.div`
+  display: flex;
+  border-radius: 32px;
+  flex-direction: column;
+  height: 370px;
+  background-color: rgba(82, 5, 133, 0.4);
+  align-items: center;
+  padding: 20px;
+  padding-top: 0px;
+  padding-bottom: 5px;
+  box-sizing: border-box;
+  justify-content: space-evenly;
+  box-shadow: 12px 13px 16px 2px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(0, 0, 0, 1);
+  width: 96%;
+
+  @media ${device.mobileS} {
+    height: 200px;
+    flex-direction: row;
+  }
+  @media ${device.laptop} {
+    height: 370px;
+    flex-direction: column;
+  }
+`;
 
 export default AutorDetail;

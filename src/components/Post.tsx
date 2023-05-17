@@ -11,6 +11,7 @@ import useNearestElement from "../hooks/useNearestElement";
 import { PostButton } from "./Buttons";
 import { device, size as windowSizes } from "../styles/device";
 import useWindowPosition from "../hooks/useWindowPosition";
+import { useActualPostContext } from "../context/actualPostContext";
 
 const containerToRef = forwardRef(
   ({ className, children, style, key }: any, ref: any) => {
@@ -86,7 +87,15 @@ const ResultArea = styled.div`
   );
 `;
 
-const Post = ({ title, content, style, id, isFullView = false }: any) => {
+const Post = ({
+  title,
+  content,
+  style,
+  id,
+  userId,
+  isFullView = false,
+}: any) => {
+  const [actualPost, setActualPost]: any = useActualPostContext();
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const postRef = useRef<any>(null);
@@ -94,6 +103,13 @@ const Post = ({ title, content, style, id, isFullView = false }: any) => {
   const { viewportWidth } = useWindowPosition();
 
   const isNearest: any = useNearestElement(postRef);
+
+  useEffect(() => {
+    if (isNearest) {
+      setActualPost({ title, content, style, id, userId });
+    }
+  }, [isNearest]);
+
   const isMobile = viewportWidth <= parseFloat(windowSizes.tablet);
   const shortenedContent = isMobile
     ? content.slice(0, 100)

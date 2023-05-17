@@ -49,12 +49,13 @@ const Posts = (/* { userId, id }: PostsProps */) => {
       }}
     >
       {filteredPosts &&
-        filteredPosts?.map(({ id, title, content }: any) => (
+        filteredPosts?.map(({ id, title, content,userId }: any) => (
           <Post
             key={id}
             id={id}
             title={title}
             content={content}
+            userId={userId}
             isFullView={!!fullPostId}
           />
         ))}

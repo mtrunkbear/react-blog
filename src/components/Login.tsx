@@ -1,17 +1,20 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import Posts from "./Posts";
-import { useUserContext } from "../context/userContext";
+
+const API_URL = import.meta.env.VITE_API_URL;
+const APP_URL = import.meta.env.VITE_APP_URL;
 
 axios.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
 
 const Login: any = () => {
   const [token, setToken] = useState<String>();
-  //const [user, setUser] = useState<any>();
-  const { user, setUser }: any = useUserContext();
 
-  const handleLogin = async () => {
-    window.location.href = "http://localhost:4000/auth/google";
+  const handleLogin = () => {
+    window.location.href = `${API_URL}/auth/google`;
+  };
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    window.location.href = APP_URL;
   };
 
   const handleToken = () => {
@@ -40,24 +43,30 @@ const Login: any = () => {
           height: "22px",
           background: "rgba(217, 217, 217, 0.09)",
           borderRadius: "18px",
-          fontSize:"12px",
-          border: "none"
+          fontSize: "12px",
+          border: "none",
         }}
         onClick={handleLogin}
       >
         Iniciar sesión
       </button>
     );
-  }
-
-  {
-    console.log({ user });
-  }
-  return (
-    <div style={{ width: "200px" }}>
-      <h1>Bienvenido!</h1>
-    </div>
-  );
+  } else
+    return (
+      <button
+        style={{
+          width: "90px",
+          height: "22px",
+          background: "rgba(217, 217, 217, 0.09)",
+          borderRadius: "18px",
+          fontSize: "12px",
+          border: "none",
+        }}
+        onClick={handleLogout}
+      >
+        Cerrar sesión
+      </button>
+    );
 };
 
 export default Login;

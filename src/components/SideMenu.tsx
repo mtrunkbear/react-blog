@@ -2,6 +2,7 @@ import styled from "styled-components";
 import AutorDetail from "./AutorDetail";
 import ArticlesMenu from "./ArticlesMenu";
 import { device } from "../styles/device";
+import { useActualPostContext } from "../context/actualPostContext";
 
 const SideMenuContainer = styled.div`
   display: none;
@@ -44,6 +45,10 @@ const SideMenuContainer = styled.div`
 `;
 
 const SideMenu = () => {
+  const [actualPost]: any = useActualPostContext();
+
+  console.log({actualPost})
+  
   return (
     <SideMenuContainer>
       <AutorDetail />
