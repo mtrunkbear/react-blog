@@ -26,10 +26,9 @@ const Footer = styled.div`
 `;
 
 function App() {
-  
   const [markdownText, setMarkdownText] = useState<any>("");
   const { user }: any = useUserContext();
-  console.log({user})
+  console.log({ user });
 
   const contextValue: contextValue = {
     markdownText,
@@ -73,7 +72,7 @@ function App() {
           <Categories />
           {/*TODO: handle routes in a config or something similar to improve cleancode*/}
           <Routes>
-            <Route path="/:userId" element={<Posts userId={user?.id} />} />
+            <Route path="/:userNickName" element={<Posts />} />
             <Route path="/" element={<Posts />} />
             <Route path="post" element={<Posts />}>
               <Route path=":id" element={<Posts />} />

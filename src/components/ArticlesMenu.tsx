@@ -1,4 +1,3 @@
-import React from "react";
 import { useFetchPosts } from "../hooks/useFetchPosts";
 import { LinkStyle } from "./Buttons";
 
@@ -9,6 +8,7 @@ const ArticlesMenu = () => {
     <div style={{ height: "250px", width: "100%" }}>
       {posts?.slice(0, 5).map((post: any) => (
            <p
+           key={post.id}
            style={{
             display:"flex",
             alignItems: "center",

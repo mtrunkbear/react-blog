@@ -3,6 +3,52 @@ import AutorDetail from "./AutorDetail";
 import ArticlesMenu from "./ArticlesMenu";
 import { device } from "../styles/device";
 import { useActualPostContext } from "../context/actualPostContext";
+import { useUserContext } from "../context/userContext";
+import { useEffect, useState } from "react";
+
+const SideMenu = () => {
+  const { user, users }: any = useUserContext();
+  const [actualPost]: any = useActualPostContext();
+  const [actualUser, setActualUser] = useState({
+    firstName: "",
+    lastName: "",
+    occupation: "",
+    description: "",
+    id: "",
+    nickName: "",
+  });
+
+  useEffect(() => {
+    console.log({ userFromSide: user });
+    if (users) {
+      const userOfFocusedPost = users.find(
+        ({ id }: any) => id == actualPost.userId
+      );
+      if (userOfFocusedPost) {
+        setActualUser(userOfFocusedPost);
+      }
+    }
+  }, [actualPost, users]);
+
+  const { firstName, lastName, occupation, description, id, nickName } =
+    actualUser;
+
+  console.log({ actualUser });
+
+  return (
+    <SideMenuContainer>
+      <AutorDetail
+        firstName={firstName}
+        lastName={lastName}
+        occupation={occupation}
+        description={description}
+        nickName={nickName}
+        id={id}
+      />
+      <ArticlesMenu />
+    </SideMenuContainer>
+  );
+};
 
 const SideMenuContainer = styled.div`
   display: none;
@@ -43,18 +89,5 @@ const SideMenuContainer = styled.div`
  
 
 `;
-
-const SideMenu = () => {
-  const [actualPost]: any = useActualPostContext();
-
-  console.log({actualPost})
-  
-  return (
-    <SideMenuContainer>
-      <AutorDetail />
-      <ArticlesMenu />
-    </SideMenuContainer>
-  );
-};
 
 export default SideMenu;

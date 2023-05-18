@@ -7,13 +7,15 @@ export const UserContext = createContext({});
 export const useUserContext = () => useContext(UserContext);
 // Crea un componente `UserProvider` para envolver la aplicación y proporcionar un valor al contexto
 export const UserProvider = ({ children }: any) => {
-  const { currentUser, loadingCurrentUser, setLoadingCurrentUser } = useUsers();
+  const { currentUser, loadingCurrentUser, setLoadingCurrentUser, users } =
+    useUsers();
 
   // Retorna el proveedor del contexto con el valor actualizado del usuario y la función de actualización
   return (
     <UserContext.Provider
       value={{
         user: currentUser,
+        users,
         loadingCurrentUser,
         setLoadingCurrentUser,
       }}

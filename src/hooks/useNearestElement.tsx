@@ -4,12 +4,12 @@ function useNearestElement(ref: any) {
   const [nearestElement, setNearestElement] = useState<
     HTMLElement | null | Boolean
   >(null);
-  const { y: windowY, viewportHeight }: any = useWindowPosition();
+  const { viewportHeight }: any = useWindowPosition();
 
   useEffect(() => {
     const handleScroll = () => {
       if (ref.current) {
-        const { top, bottom, y, height } = ref.current.getBoundingClientRect();
+        const { y } = ref.current.getBoundingClientRect();
         /*  if (top < viewportHeight && bottom > 0) {
           setNearestElement(ref.current);
         } */
@@ -27,7 +27,7 @@ function useNearestElement(ref: any) {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [ref, viewportHeight,window]);
+  }, [ref, viewportHeight, window]);
 
   return nearestElement;
 }

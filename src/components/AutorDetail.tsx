@@ -7,11 +7,17 @@ import mail from "../assets/mail.svg";
 import { device } from "../styles/device";
 import { useUserContext } from "../context/userContext";
 
-const AutorDetail = () => {
-  const { user }: any = useUserContext();
+const AutorDetail = ({
+  nickName,
+  firstName,
+  lastName,
+  occupation,
+  description,
+  id,
+}: any) => {
+  /*   const { user }: any = useUserContext();
 
-  const { firstName, lastName, occupation, description, id } = user;
-  /*  console.log({ userFromAutor: user });  */
+  const { firstName, lastName, occupation, description, id } = user; */
   return id ? (
     <AutorStyle>
       <AvatarContainer>
@@ -41,7 +47,7 @@ const AutorDetail = () => {
             color: "rgba(84, 227, 70, 1)",
           }}
         >
-          {`<${firstName + lastName}/>`}
+          {`<${firstName + lastName ?firstName + lastName:nickName}/>`}
         </h3>
         <p
           style={{
@@ -102,7 +108,7 @@ const SocialMedia = () => {
       }}
     >
       {socialMedia.map(({ link, name, icon }) => (
-        <RRSSLink link={link} name={name} icon={icon} />
+        <RRSSLink key={name} link={link} name={name} icon={icon} />
       ))}
     </div>
   );

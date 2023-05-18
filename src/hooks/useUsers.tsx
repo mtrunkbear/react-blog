@@ -4,7 +4,7 @@ import { useNavigate } from "react-router";
 
 export const useUsers = () => {
   const navigate = useNavigate();
-  const [users, setUsers] = useState({});
+  const [users, setUsers] = useState();
   const [currentUser, setCurrentUser] = useState({});
   const [loadingCurrentUser, setLoadingCurrentUser] = useState(true);
 

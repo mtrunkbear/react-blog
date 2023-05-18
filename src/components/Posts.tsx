@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Post from "./Post";
 import { useFetchPosts } from "../hooks/useFetchPosts";
 import { useParams } from "react-router";
+import { useUserContext } from "../context/userContext";
 
 interface PostsProps {
   userId?: string;
@@ -11,16 +12,23 @@ interface PostsProps {
 const Posts = (/* { userId, id }: PostsProps */) => {
   const [filteredPosts, setFilteredPosts] = useState<any>();
   const allPosts: any = useFetchPosts();
-  let { userId, id: fullPostId } = useParams();
-  console.log({ userId, fullPostId });
+  const { userNickName, id: fullPostId } = useParams();
+  const { users }: any = useUserContext();
+
+  console.log({ userNickName, fullPostId });
 
   useEffect(() => {
     if (allPosts) {
-      if (userId) {
-        const filtered = allPosts?.filter(
-          (post: PostsProps) => post?.userId === userId
+      if (userNickName && users?.length > 0) {
+        const user = users.find(
+          ({ nickName }: any) => nickName == userNickName.slice(1)
         );
-        setFilteredPosts(filtered);
+        if (user) {
+          const filtered = allPosts?.filter(
+            (post: PostsProps) => post?.userId == user.id
+          );
+          setFilteredPosts(filtered);
+        }
       } else if (fullPostId) {
         const filtered = allPosts?.filter(
           (post: PostsProps) => post?.id === fullPostId
@@ -33,7 +41,7 @@ const Posts = (/* { userId, id }: PostsProps */) => {
       setFilteredPosts([]);
     }
     //console.log({ allPosts });
-  }, [allPosts, userId, fullPostId]);
+  }, [allPosts, users, userNickName, fullPostId]);
 
   //console.log({ filteredPosts });
   return (
@@ -45,11 +53,11 @@ const Posts = (/* { userId, id }: PostsProps */) => {
         justifyContent: "center",
         width: "100%",
         marginBottom: "400px",
-        boxSizing: "border-box"
+        boxSizing: "border-box",
       }}
     >
       {filteredPosts &&
-        filteredPosts?.map(({ id, title, content,userId }: any) => (
+        filteredPosts?.map(({ id, title, content, userId }: any) => (
           <Post
             key={id}
             id={id}
@@ -57,6 +65,7 @@ const Posts = (/* { userId, id }: PostsProps */) => {
             content={content}
             userId={userId}
             isFullView={!!fullPostId}
+            firstPost={filteredPosts[0]}
           />
         ))}
     </div>

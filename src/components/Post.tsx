@@ -1,6 +1,5 @@
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { nnfxDark } from "react-syntax-highlighter/dist/esm/styles/hljs";
-import useCheckElementInCenter from "../hooks/useCheckElementInCenter";
 import { useRef, forwardRef, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router";
 import guardar from "../assets/guardar.svg";
@@ -13,80 +12,6 @@ import { device, size as windowSizes } from "../styles/device";
 import useWindowPosition from "../hooks/useWindowPosition";
 import { useActualPostContext } from "../context/actualPostContext";
 
-const containerToRef = forwardRef(
-  ({ className, children, style, key }: any, ref: any) => {
-    return (
-      <div key={key} className={className} ref={ref} style={style}>
-        {children}
-      </div>
-    );
-  }
-);
-const Container = styled(containerToRef)`
-  display: flex;
-  position: relative;
-  flex-direction: column;
-  align-items: center;
-  /* //justify-content: center; */
-  width: 90%;
-  padding: 13px;
-  font-family: "Lato", sans-serif;
-  background-color: rgba(60, 33, 228, 0.05);
-  margin-top: 15px;
-  margin-bottom: 10px;
-  text-align: left;
-  padding: 30px;
-  box-sizing: border-box;
-  border-radius: 40px;
-  height: 400px;
-  border-style: solid none none none;
-  border-color: rgba(48, 55, 48);
-
-  transition: all 1250ms cubic-bezier(0.19, 1, 0.22, 1);
-  outline: 0.1px solid;
-  outline-color: rgba(255, 255, 255, 0.05);
-  outline-offset: 0px;
-  text-shadow: none;
-  cursor: pointer;
-  &:hover {
-    text-shadow: 1px 1px 2px rgba(84, 227, 70, 1);
-  }
-
-  @media (${device.mobileS}) {
-    height: 300px;
-  }
-  @media (${device.laptop}) {
-    height: 400px;
-  }
-`;
-
-const Title = styled.div`
-  font-size: 22px;
-  font-weight: 600;
-  margin-bottom: 1em;
-  padding: 8px 0;
-  border-bottom: 1px solid rgba(15, 15, 15, 0.3);
-`;
-
-const ResultArea = styled.div`
-  padding: 30px;
-  padding-top: 4px;
-  box-sizing: border-box;
-  border-radius: 24px;
-
-  width: 100%;
-  height: 90%;
-  border: none;
-  font-size: 17px;
-  text-align: left;
-  transition: background 2s linear;
-  background: linear-gradient(
-    180deg,
-    rgba(217, 217, 217, 0.04) 70.86%,
-    rgba(217, 217, 217, 0) 100%
-  );
-`;
-
 const Post = ({
   title,
   content,
@@ -94,22 +19,26 @@ const Post = ({
   id,
   userId,
   isFullView = false,
+  firstPost,
 }: any) => {
   const [actualPost, setActualPost]: any = useActualPostContext();
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const postRef = useRef<any>(null);
 
-  const { viewportWidth } = useWindowPosition();
-
   const isNearest: any = useNearestElement(postRef);
 
   useEffect(() => {
+    if (!actualPost?.id) {
+      console.log({firstPost})
+      setActualPost(firstPost);
+    }
     if (isNearest) {
       setActualPost({ title, content, style, id, userId });
     }
-  }, [isNearest]);
+  }, [isNearest,firstPost]);
 
+  const { viewportWidth } = useWindowPosition();
   const isMobile = viewportWidth <= parseFloat(windowSizes.tablet);
   const shortenedContent = isMobile
     ? content.slice(0, 100)
@@ -220,5 +149,79 @@ const Post = ({
     </Container>
   );
 };
+
+const containerToRef = forwardRef(
+  ({ className, children, style, key }: any, ref: any) => {
+    return (
+      <div key={key} className={className} ref={ref} style={style}>
+        {children}
+      </div>
+    );
+  }
+);
+const Container = styled(containerToRef)`
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  align-items: center;
+  /* //justify-content: center; */
+  width: 90%;
+  padding: 13px;
+  font-family: "Lato", sans-serif;
+  background-color: rgba(60, 33, 228, 0.05);
+  margin-top: 15px;
+  margin-bottom: 10px;
+  text-align: left;
+  padding: 30px;
+  box-sizing: border-box;
+  border-radius: 40px;
+  height: 400px;
+  border-style: solid none none none;
+  border-color: rgba(48, 55, 48);
+
+  transition: all 1250ms cubic-bezier(0.19, 1, 0.22, 1);
+  outline: 0.1px solid;
+  outline-color: rgba(255, 255, 255, 0.05);
+  outline-offset: 0px;
+  text-shadow: none;
+  cursor: pointer;
+  &:hover {
+    text-shadow: 1px 1px 2px rgba(84, 227, 70, 1);
+  }
+
+  @media (${device.mobileS}) {
+    height: 300px;
+  }
+  @media (${device.laptop}) {
+    height: 400px;
+  }
+`;
+
+const Title = styled.div`
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 1em;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(15, 15, 15, 0.3);
+`;
+
+const ResultArea = styled.div`
+  padding: 30px;
+  padding-top: 4px;
+  box-sizing: border-box;
+  border-radius: 24px;
+
+  width: 100%;
+  height: 90%;
+  border: none;
+  font-size: 17px;
+  text-align: left;
+  transition: background 2s linear;
+  background: linear-gradient(
+    180deg,
+    rgba(217, 217, 217, 0.04) 70.86%,
+    rgba(217, 217, 217, 0) 100%
+  );
+`;
 
 export default Post;
