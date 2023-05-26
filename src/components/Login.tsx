@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 
 const API_URL = import.meta.env.VITE_API_URL;
 const APP_URL = import.meta.env.VITE_APP_URL;
 
-axios.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
 
 const Login: any = () => {
   const [token, setToken] = useState<String>();

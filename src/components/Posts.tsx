@@ -16,13 +16,15 @@ const Posts = () => {
   const { users }: any = useUserContext();
 
   console.log({ userNickName, fullPostId });
-
+//TODO: make  custom hooks to this filter
   useEffect(() => {
     if (allPosts) {
       if (userNickName && users?.length > 0) {
         const user = users.find(
-          ({ nickName }: any) => nickName == userNickName.slice(1)
+          ({ nickName }: any) =>
+            nickName.toLowerCase() == userNickName.slice(1).toLocaleLowerCase()
         );
+        console.log(user);
         if (user) {
           const filtered = allPosts?.filter(
             (post: PostsProps) => post?.userId == user.id
@@ -42,7 +44,6 @@ const Posts = () => {
     }
   }, [allPosts, users, userNickName, fullPostId]);
 
- 
   return (
     <div
       style={{
