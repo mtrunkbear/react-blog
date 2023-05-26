@@ -27,7 +27,6 @@ const Login: any = () => {
 
   useEffect(() => {
     const tokenFromStorage = localStorage.getItem("token");
-    //console.log({ tok: tokenFromStorage });
     if (tokenFromStorage != null && tokenFromStorage != "null") {
       setToken(tokenFromStorage);
     } else {

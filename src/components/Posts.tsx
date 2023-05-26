@@ -9,7 +9,7 @@ interface PostsProps {
   id?: string;
 }
 
-const Posts = (/* { userId, id }: PostsProps */) => {
+const Posts = () => {
   const [filteredPosts, setFilteredPosts] = useState<any>();
   const allPosts: any = useFetchPosts();
   const { userNickName, id: fullPostId } = useParams();
@@ -40,10 +40,9 @@ const Posts = (/* { userId, id }: PostsProps */) => {
     } else {
       setFilteredPosts([]);
     }
-    //console.log({ allPosts });
   }, [allPosts, users, userNickName, fullPostId]);
 
-  //console.log({ filteredPosts });
+ 
   return (
     <div
       style={{

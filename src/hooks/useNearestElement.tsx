@@ -10,12 +10,6 @@ function useNearestElement(ref: any) {
     const handleScroll = () => {
       if (ref.current) {
         const { y } = ref.current.getBoundingClientRect();
-        /*  if (top < viewportHeight && bottom > 0) {
-          setNearestElement(ref.current);
-        } */
-        /* const isVerticallyCentral =
-         Math.abs(viewportHeight / 2 - (y + height / 8) - 150) < 250; */
-
         if (y < 400 && y > 0) {
           setNearestElement(true);
         } else {

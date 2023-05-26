@@ -3,7 +3,6 @@ const apiUrl = import.meta.env.VITE_API_URL;
 
 export const useFetchPosts = () => {
   const [posts, setPosts] = useState();
-  //console.log({ posts });
 
   useEffect(() => {
     fetch(`${apiUrl}/api/post`)

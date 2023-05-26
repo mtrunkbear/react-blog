@@ -18,7 +18,6 @@ function useWindowPosition() {
         viewportHeight,
         viewportWidth,
       });
-      //console.log(window);
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });

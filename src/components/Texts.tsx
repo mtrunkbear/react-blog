@@ -1,7 +1,8 @@
-//WIP
+//WIP: text fielts to standarize the texts componets
 
-export const DescriptionText= ()=>{
+//TODO: description text
+/* export const DescriptionText= ()=>{
 
 
 
-}
+} */
