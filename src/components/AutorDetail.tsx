@@ -5,7 +5,6 @@ import linkedinIcon from "../assets/linkedin.svg";
 import styled from "styled-components";
 import mail from "../assets/mail.svg";
 import { device } from "../styles/device";
-import { useUserContext } from "../context/userContext";
 
 const AutorDetail = ({
   nickName,
@@ -15,9 +14,6 @@ const AutorDetail = ({
   description,
   id,
 }: any) => {
-  /*   const { user }: any = useUserContext();
-
-  const { firstName, lastName, occupation, description, id } = user; */
   return id ? (
     <AutorStyle>
       <AvatarContainer>
@@ -71,7 +67,7 @@ const AutorDetail = ({
       <SocialMedia />
     </AutorStyle>
   ) : (
-    "cargando..."
+    "Cargando..."
   );
 };
 
