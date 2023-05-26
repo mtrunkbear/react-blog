@@ -1,4 +1,5 @@
 import { CircleButton, LinkStyle } from "./Buttons";
+import { useNavigate } from "react-router";
 import avatar from "../assets/avatar.jpg";
 import githubIcon from "../assets/github.svg";
 import linkedinIcon from "../assets/linkedin.svg";
@@ -14,13 +15,19 @@ const AutorDetail = ({
   description,
   id,
 }: any) => {
+  const navigate = useNavigate();
+
   return id ? (
     <AutorStyle>
       <AvatarContainer>
         <img width={20} src={mail} />
       </AvatarContainer>
 
-      <CircleButton image={avatar} size={80} />
+      <CircleButton
+        onClick={() => navigate("/@" + nickName)}
+        image={avatar}
+        size={80}
+      />
       <div>
         <p
           style={{
@@ -42,17 +49,17 @@ const AutorDetail = ({
             textAlign: "left",
             color: "rgba(84, 227, 70, 1)",
           }}
+          onClick={() => navigate("/@" + nickName)}
         >
-          {`<${firstName + lastName ?firstName + lastName:nickName}/>`}
+          {`<${firstName + lastName ? firstName + lastName : nickName}/>`}
         </h3>
         <p
           style={{
             fontSize: "14px",
             fontWeight: 600,
             textAlign: "left",
-            marginBottom: 0,
             marginLeft: 10,
-            height: 10,
+            height: "auto",
           }}
         >
           {occupation}

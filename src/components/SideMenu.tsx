@@ -66,26 +66,10 @@ const SideMenuContainer = styled.div`
   top: 100px;
   transition: top 0.4s linear;
   
-  @media ${device.laptop} {
+  @media ${device.laptopM} {
     display: flex;
   } 
-  /* @media ${device.mobileM} {
-    top: 100;
-    display: flex;
-    flex-direction: row;
-    height: 200px;
-    width: 100%;
-    position: fixed;
-     box-sizing: border-box; 
-  }
-  /*  @media ${device.tablet} {
-    display: none;
-  }
- */ */
-  
-  /* @media ${device.laptopL} {
-    display: flex;
-  } */
+
  
 
 `;

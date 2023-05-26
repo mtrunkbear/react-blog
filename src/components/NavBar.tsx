@@ -34,7 +34,7 @@ const Nav = styled.nav`
   box-sizing: border-box;
 
   @media ${device.laptop} {
-    width: 1000px;
+    width: 100%;
   }
   @media ${device.laptopL} {
     width: 1300px;
