@@ -18,10 +18,8 @@ export const useUsers = () => {
   }, []); 
 
   useEffect(() => {
-    console.log("PASAAA")
     const fetchCurrentUser = async () => {
       const fetchedUser = await getCurrentUser({ navigate });
-      console.log({fetchedUser})
       if (fetchedUser) {
         setCurrentUser(fetchedUser);
         setLoadingCurrentUser(false);

@@ -15,7 +15,6 @@ const Posts = () => {
   const { userNickName, id: fullPostId } = useParams();
   const { users }: any = useUserContext();
 
-  console.log({ userNickName, fullPostId });
 //TODO: make  custom hooks to this filter
   useEffect(() => {
     if (allPosts) {

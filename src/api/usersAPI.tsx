@@ -10,7 +10,6 @@ export const getUsers = async () => {
         return response.json();
       })
       .then((data) => data);
-    console.log({ users: response });
     return response;
   } catch (error) {
     console.error("Error al obtener los usuarios:", error);

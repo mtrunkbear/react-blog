@@ -28,7 +28,6 @@ const Footer = styled.div`
 function App() {
   const [markdownText, setMarkdownText] = useState<any>("");
   const { user }: any = useUserContext();
-  console.log({ user });
 
   const contextValue: contextValue = {
     markdownText,

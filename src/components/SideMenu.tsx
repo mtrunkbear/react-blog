@@ -5,8 +5,10 @@ import { device } from "../styles/device";
 import { useActualPostContext } from "../context/actualPostContext";
 import { useUserContext } from "../context/userContext";
 import { useEffect, useState } from "react";
+import { useParams, useLocation } from "react-router";
 
 const SideMenu = () => {
+  const { pathname } = useLocation();
   const { user, users }: any = useUserContext();
   const [actualPost]: any = useActualPostContext();
   const [actualUser, setActualUser] = useState({
@@ -19,21 +21,29 @@ const SideMenu = () => {
   });
 
   useEffect(() => {
-    console.log({ userFromSide: user });
     if (users) {
-      const userOfFocusedPost = users.find(
-        ({ id }: any) => id == actualPost.userId
-      );
-      if (userOfFocusedPost) {
-        setActualUser(userOfFocusedPost);
+      const userOfNickName =
+        pathname &&
+        users.find(
+          ({ nickName }: any) =>
+            nickName.toLowerCase() == pathname?.slice(2).toLocaleLowerCase()
+        );
+      if (userOfNickName) {
+        setActualUser(userOfNickName);
+      } else if (users && actualPost) {
+        const userOfFocusedPost = users.find(
+          ({ id }: any) => id == actualPost.userId
+        );
+        if (userOfFocusedPost) {
+          setActualUser(userOfFocusedPost);
+        }
       }
     }
-  }, [actualPost, users]);
+  }, [actualPost, users, pathname]);
 
   const { firstName, lastName, occupation, description, id, nickName } =
     actualUser;
 
-  console.log({ actualUser });
 
   return (
     <SideMenuContainer>
@@ -65,13 +75,10 @@ const SideMenuContainer = styled.div`
   align-items: center;
   top: 100px;
   transition: top 0.4s linear;
-  
+
   @media ${device.laptopM} {
     display: flex;
-  } 
-
- 
-
+  }
 `;
 
 export default SideMenu;

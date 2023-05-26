@@ -9,13 +9,11 @@ export const useFetchPosts = () => {
       .then((response) => response.json())
       .then((data) => {
         setPosts(data);
-        console.log(data);
       })
       .catch((error) => {
         console.log(error);
       });
 
-    console.log({ posts });
   }, []);
 
   return posts;

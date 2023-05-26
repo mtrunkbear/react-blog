@@ -30,7 +30,6 @@ const Post = ({
 
   useEffect(() => {
     if (!actualPost?.id) {
-      console.log({firstPost})
       setActualPost(firstPost);
     }
     if (isNearest) {
@@ -114,7 +113,6 @@ const Post = ({
             code({ node, inline, className, children, ...props }) {
               const match = /language-(\w+)/.exec(className || "");
               const language = match?.[1];
-              //console.log({ className });
               const content = String(children).replace(/\n$/, "");
               if (inline) {
                 return (

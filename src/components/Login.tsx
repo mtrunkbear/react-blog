@@ -42,6 +42,7 @@ const Login: any = () => {
           borderRadius: "18px",
           fontSize: "12px",
           border: "none",
+          cursor: "pointer",
         }}
         onClick={handleLogin}
       >
