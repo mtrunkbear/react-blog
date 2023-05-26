@@ -29,7 +29,7 @@ const Categories = () => {
         }}
       >
         {categories.map(({ name, icon }: any) => (
-          <CategoriesButton filterColor={"violet"} >
+          <CategoriesButton key={name} filterColor={"violet"} >
             <li style={{ display: "flex", justifyContent: "space-evenly", width:"80%" }}>
               <img src={icon} width={22} />
               {name.toUpperCase()}
