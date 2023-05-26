@@ -31,7 +31,7 @@ export const useUsers = () => {
       fetchCurrentUser();
     }
   }, [loadingCurrentUser]);
-
+//WIP:
   /*  const handleUpdateUser = async (id, userData) => {
     const updatedUser = await updateUser(id, userData);
     if (updatedUser) {
