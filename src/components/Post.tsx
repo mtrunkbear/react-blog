@@ -10,7 +10,7 @@ import useNearestElement from "../hooks/useNearestElement";
 import { PostButton } from "./Buttons";
 import { device, size as windowSizes } from "../styles/device";
 import useWindowPosition from "../hooks/useWindowPosition";
-import { useActualPostContext } from "../context/actualPostContext";
+import { useFocusedPostContext } from "../context/focusedPostContext";
 
 const Post = ({
   title,
@@ -21,7 +21,7 @@ const Post = ({
   isFullView = false,
   firstPost,
 }: any) => {
-  const [actualPost, setActualPost]: any = useActualPostContext();
+  const [focusedPost, setFocusedPost]: any = useFocusedPostContext();
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const postRef = useRef<any>(null);
@@ -29,11 +29,11 @@ const Post = ({
   const isNearest: any = useNearestElement(postRef);
 
   useEffect(() => {
-    if (!actualPost?.id) {
-      setActualPost(firstPost);
+    if (!focusedPost?.id) {
+      setFocusedPost(firstPost);
     }
     if (isNearest) {
-      setActualPost({ title, content, style, id, userId });
+      setFocusedPost({ title, content, style, id, userId });
     }
   }, [isNearest,firstPost]);
 

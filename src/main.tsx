@@ -4,15 +4,15 @@ import App from "./App.tsx";
 import "./index.css";
 import { UserProvider } from "./context/userContext.tsx";
 import { BrowserRouter } from "react-router-dom";
-import ActualPostProvider from "./context/actualPostContext.tsx";
+import FocusedPostProvider from "./context/focusedPostContext.tsx";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <BrowserRouter>
       <UserProvider>
-        <ActualPostProvider>
+        <FocusedPostProvider>
           <App />
-        </ActualPostProvider>
+        </FocusedPostProvider>
       </UserProvider>
     </BrowserRouter>
   </React.StrictMode>

@@ -2,7 +2,7 @@ import styled from "styled-components";
 import AutorDetail from "./AutorDetail";
 import ArticlesMenu from "./ArticlesMenu";
 import { device } from "../styles/device";
-import { useActualPostContext } from "../context/actualPostContext";
+import { useFocusedPostContext } from "../context/focusedPostContext";
 import { useUserContext } from "../context/userContext";
 import { useEffect, useState } from "react";
 import { useParams, useLocation } from "react-router";
@@ -10,7 +10,7 @@ import { useParams, useLocation } from "react-router";
 const SideMenu = () => {
   const { pathname } = useLocation();
   const { user, users }: any = useUserContext();
-  const [actualPost]: any = useActualPostContext();
+  const [focusedPost]: any = useFocusedPostContext();
   const [actualUser, setActualUser] = useState({
     firstName: "",
     lastName: "",
@@ -30,16 +30,16 @@ const SideMenu = () => {
         );
       if (userOfNickName) {
         setActualUser(userOfNickName);
-      } else if (users && actualPost) {
+      } else if (users && focusedPost) {
         const userOfFocusedPost = users.find(
-          ({ id }: any) => id == actualPost.userId
+          ({ id }: any) => id == focusedPost.userId
         );
         if (userOfFocusedPost) {
           setActualUser(userOfFocusedPost);
         }
       }
     }
-  }, [actualPost, users, pathname]);
+  }, [focusedPost, users, pathname]);
 
   const { firstName, lastName, occupation, description, id, nickName } =
     actualUser;
