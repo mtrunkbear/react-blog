@@ -1,7 +1,7 @@
 # Project Name: Blog
 
 ## Description
-This is a blog application built with React and TypeScript. It allows users to create and view posts, and provides markdown editing functionality. The application utilizes React Router for navigation and Axios for making API requests. Styled Components is used for styling the components.
+This is a blog application built with React and TypeScript. It allows users to create and view posts, and provides markdown editing functionality. The application utilizes React Router for navigation and simple fetch for making API requests. Styled Components is used for styling the components.
 
 ## Installation
 1. Clone the repository.
