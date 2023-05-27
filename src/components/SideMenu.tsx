@@ -22,12 +22,19 @@ const SideMenu = () => {
 
   useEffect(() => {
     if (users) {
+      console.log({
+        pathname,
+        nickName: pathname?.slice(2).toLocaleLowerCase(),
+      });
       const userOfNickName =
         pathname &&
         users.find(
           ({ nickName }: any) =>
-            nickName.toLowerCase() == pathname?.slice(2).toLocaleLowerCase()
+            nickName.toLowerCase() === pathname?.slice(2).toLocaleLowerCase() &&
+            nickName.toLowerCase() !== ""
         );
+      console.log({ userOfNickName });
+      console.log({ focusedPost });
       if (userOfNickName) {
         setActualUser(userOfNickName);
       } else if (users && focusedPost) {
@@ -43,7 +50,6 @@ const SideMenu = () => {
 
   const { firstName, lastName, occupation, description, id, nickName } =
     actualUser;
-
 
   return (
     <SideMenuContainer>
