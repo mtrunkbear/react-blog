@@ -1,15 +1,15 @@
 import React, { MouseEventHandler } from "react";
-import styled from "styled-components";
+import styled from "@emotion/styled";
 
-interface Props {
-  text: string | undefined;
+interface CircleButtonProps {
+  text?: string | undefined;
   image?: string;
-  size: number;
-  onClick?: () => void;
+  size: number | string;
+  onClick?: () => any;
   styles?: React.CSSProperties;
 }
 
-const ButtonContainer = styled.div<{ size: string; style: any }>`
+const ButtonContainer = styled.div<{ size: string | number; style: any }>`
   display: flex;
   width: ${({ size }) => size};
   height: ${({ size }) => size};
@@ -46,19 +46,19 @@ const CircleButtonText = styled.p`
   color: #2b3674;
 `;
 
-export const CircleButton: React.FC<Props> = ({
+export const CircleButton: React.FC<CircleButtonProps> = ({
   text,
   image,
   size,
   onClick,
   styles,
-}) => {
+}: CircleButtonProps) => {
   const buttonSize = Number(size);
   const iconSize = buttonSize * 1.7;
   const hasOnClick = Boolean(onClick);
 
   return (
-    <ButtonContainer size={size} style={styles} onClick={onClick}>
+    <ButtonContainer size={size } style={styles} onClick={onClick}>
       <Button hasOnClick={hasOnClick}>
         <Icon iconSize={iconSize}>
           {image && (
@@ -125,7 +125,7 @@ export const PostButton = ({
 };
 
 export const LinkStyle = styled.a<{
-  width: any | undefined;
+  width?: any | undefined;
   filterColor: string;
 }>`
   display: flex;
@@ -157,16 +157,19 @@ const CategoriesButtonContainer = styled(LinkStyle)`
 export const CategoriesButton = ({
   children,
   filterColor,
+  style
 }: {
   children: any;
   filterColor: string;
+  style?:any;
 }) => {
   const filterColors: { [key: string]: string } = {
     violet: " invert(0.4) sepia(1) hue-rotate(200deg) saturate(1000%)",
+    green: "invert(0.4) sepia(1) hue-rotate(110deg) saturate(200%)" 
   };
 
   return (
-    <CategoriesButtonContainer filterColor={filterColors[filterColor]}>
+    <CategoriesButtonContainer style={style} filterColor={filterColors[filterColor]}>
       {children}
     </CategoriesButtonContainer>
   );

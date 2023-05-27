@@ -85,12 +85,12 @@ blog
 - react-router: ^6.11.0
 - react-router-dom: ^6.11.0
 - react-syntax-highlighter: ^15.5.0
-- styled-components: ^5.3.10
+- @emotion/styled: ^5.3.10
 
 ## Dev Dependencies
 - @types/react: ^18.0.28
 - @types/react-dom: ^18.0.11
-- @types/styled-components: ^5.1.26
+- @types/@emotion/styled: ^5.1.26
 - @typescript-eslint/eslint-plugin: ^5.57.1
 - @typescript-eslint/parser: ^5.57.1
 - @vitejs/plugin-react: ^4.0.0

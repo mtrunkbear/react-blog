@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import styled from "styled-components";
+import styled from "@emotion/styled";
 import editorContext from "../context/editorContext";
 
 const Container = styled.div`

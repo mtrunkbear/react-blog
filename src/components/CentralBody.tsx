@@ -1,11 +1,11 @@
-import styled from "styled-components";
+import styled from "@emotion/styled";
 import { device } from "../styles/device";
 
 const Main = styled.main`
   width: 100%;
 
   flex-direction: row;
-  margin-top: 100px;
+  margin-top: 150px;
   @media ${device.tablet} {
     width: 100%;
   }

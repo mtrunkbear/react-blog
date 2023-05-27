@@ -1,15 +1,35 @@
-import styled from "styled-components";
+import styled from "@emotion/styled";
 import Login from "./Login";
 import configIcon from "../assets/config-icon.svg";
 import { device } from "../styles/device";
+import { IconButton, useColorMode } from "@chakra-ui/react";
+import { MoonIcon, SunIcon } from '@chakra-ui/icons';
+import { useEffect } from "react";
 
 const NavBar = () => {
   const title = "BLOG DE UN FULLSTRACK />";
+  const { colorMode, toggleColorMode } = useColorMode();
+  const isDark = colorMode === 'dark';
+
+//To fix bug of initial color mode in chakra-ui
+  useEffect(() => {
+    const colorMode = localStorage.getItem("chakra-ui-color-mode");
+    if (!colorMode) {
+      //set Initial color mode
+      localStorage.setItem("chakra-ui-color-mode", "dark");
+    }
+  }, []);
 
   return (
     <Nav>
-      <Title>{title}</Title>
+      <Title style={{color: isDark? undefined: "rgb(0, 140,120"}}>{title}</Title>
       <NavElements>
+       
+        <IconButton
+      aria-label="Toggle Dark Mode"
+      icon={isDark ? <SunIcon /> : <MoonIcon />}
+      onClick={toggleColorMode}
+    />
         <Login />
         <ConfigIcon src={configIcon} />
       </NavElements>
@@ -60,7 +80,7 @@ const NavElements = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 140px;
+  width: 300px;
 `;
 
 const ConfigIcon = styled.img`

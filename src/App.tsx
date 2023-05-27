@@ -2,17 +2,17 @@ import "./App.css";
 import EditorContext from "./context/editorContext";
 
 import { useState } from "react";
-import { MarkedInput } from "./components/MarkdownInput";
-import { useUserContext } from "./context/userContext";
+/* import { MarkedInput } from "./components/MarkdownInput"; */
+/* import { useUserContext } from "./context/userContext"; */
 import Posts from "./components/Posts";
 import NavBar from "./components/NavBar";
 import CentralBody from "./components/CentralBody";
 import SideMenu from "./components/SideMenu";
 import Categories from "./components/Categories";
 import { Route, Routes } from "react-router-dom";
-import styled from "styled-components";
+import styled from "@emotion/styled";
 
-const apiUrl = import.meta.env.VITE_API_URL;
+/* const apiUrl = import.meta.env.VITE_API_URL; */
 
 interface contextValue {
   markdownText: string;
@@ -27,14 +27,14 @@ const Footer = styled.div`
 
 function App() {
   const [markdownText, setMarkdownText] = useState<any>("");
-  const { user }: any = useUserContext();
+ /*  const { user }: any = useUserContext(); */
 
   const contextValue: contextValue = {
     markdownText,
     setMarkdownText,
   };
   //TODO: handle new post request in hook
-  const handleNewPost = () => {
+/*   const handleNewPost = () => {
     if (user) {
       fetch(`${apiUrl}:4000/api/post/`, {
         headers: {
@@ -54,7 +54,7 @@ function App() {
           console.log(error);
         });
     }
-  };
+  }; */
 
   return (
     <EditorContext.Provider value={contextValue}>

@@ -5,7 +5,7 @@ import { useNavigate, useLocation } from "react-router";
 import guardar from "../assets/guardar.svg";
 
 import ReactMarkdown from "react-markdown";
-import styled from "styled-components";
+import styled from "@emotion/styled";
 import useNearestElement from "../hooks/useNearestElement";
 import { PostButton } from "./Buttons";
 import { device, size as windowSizes } from "../styles/device";
@@ -124,7 +124,7 @@ const Post = ({
                 return (
                   <SyntaxHighlighter
                     language={language}
-                    style={nnfxDark}
+                    style={nnfxDark as any}
                     PreTag="div"
                     children={content}
                     {...props}
@@ -195,13 +195,13 @@ const Container = styled(containerToRef)`
   }
 `;
 
-const Title = styled.div`
+/* const Title = styled.div`
   font-size: 22px;
   font-weight: 600;
   margin-bottom: 1em;
   padding: 8px 0;
   border-bottom: 1px solid rgba(15, 15, 15, 0.3);
-`;
+`; */
 
 const ResultArea = styled.div`
   padding: 30px;

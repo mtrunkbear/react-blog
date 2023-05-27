@@ -1,49 +1,43 @@
-import { useEffect, useState } from "react";
 import { useUserContext } from "../context/userContext";
 import { useAuthentication } from "../hooks/useAuthentication";
-import styled from "styled-components";
-
-const API_URL = import.meta.env.VITE_API_URL;
-const APP_URL = import.meta.env.VITE_APP_URL;
+import styled from "@emotion/styled";
+import {
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  forwardRef,
+  ButtonProps,
+} from "@chakra-ui/react";
+import { ChevronDownIcon } from "@chakra-ui/icons";
 
 const Login: any = () => {
   const { isLoggedIn, handleLogin, handleLogout } = useAuthentication();
-  const { user } = useUserContext();
-//WIP: user menu when is logged in
-  function handleOnChangeSelect(e) {
-    e.preventDefault();
-    console.log({ value: e.target.value });
-    const value = e.target.value;
-
-    const optionObject = {
-      logout: handleLogout,
-    };
-    optionObject[value]();
-  }
+  const { user }: any = useUserContext();
+  //WIP: user menu when is logged in
 
   if (!isLoggedIn) {
     return <LoginButton onClick={handleLogin}>{"Iniciar sesión"}</LoginButton>;
   } else
     return (
-      <LoginButton /* */>
-        <Select onChange={(e) => handleOnChangeSelect(e)}>
-          <option
-            style={{
-              backgroundColor: "red",
-              width: "130px",
-              display: "flex",
-            }}
-          >
+      <Menu>
+        <MenuButton as={LoginButton} rightIcon={<ChevronDownIcon />}>
+          <>
             {user && user.nickName}
-          </option>
-          <option>{user && user.nickName}</option>
-          <option value="logout">{"Cerrar Sesión"}</option>
-        </Select>
-      </LoginButton>
+            <ChevronDownIcon />
+          </>
+        </MenuButton>
+        <MenuList>
+          <MenuItem>Postear</MenuItem>
+          <MenuItem>Configuraciones</MenuItem>
+          <MenuItem onClick={handleLogout}>Cerrar Sesion</MenuItem>
+        </MenuList>
+      </Menu>
     );
 };
 const StyledButton = styled.button`
-  width: 115px;
+  position: relative;
+  width: 120px;
   height: 25px;
   background: rgba(217, 217, 217, 0.15);
   backdrop-filter: blur(8px);
@@ -58,35 +52,22 @@ const StyledButton = styled.button`
     transition: border 0.3s linear;
   }
 `;
-const Select = styled.select`
-  // disable default appearance
-  transform: translateX(-5px);
-  border: none;
-  outline: none;
-  -moz-appearance: none;
-  -webkit-appearance: none;
-  margin: 0;
-  padding: 0;
-  background-color: transparent;
-  width: 110%;
-  align-items: center;
-  text-align: center;
-  &:focus {
-    background-color: rgba(217, 217, 217, 0.15);
-    width: 110%;
-  }
-  &:hover {
-    background-color: rgba(217, 217, 217, 0.15);
-  }
-`;
-const LoginButton = ({
+const LoginButton = forwardRef<ButtonProps, "div">(
+  ({ onClick, children }, ref) => (
+    <StyledButton onClick={onClick} ref={ref}>
+      {children}
+    </StyledButton>
+  )
+);
+
+/* const LoginButton =({
   onClick,
   children,
 }: {
-  onClick: () => void;
+  onClick?: () => void;
   children: React.ReactNode;
 }) => {
   return <StyledButton onClick={onClick}>{children}</StyledButton>;
-};
+}; */
 
 export default Login;

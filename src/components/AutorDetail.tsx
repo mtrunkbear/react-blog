@@ -3,9 +3,10 @@ import { useNavigate } from "react-router";
 import avatar from "../assets/avatar.jpg";
 import githubIcon from "../assets/github.svg";
 import linkedinIcon from "../assets/linkedin.svg";
-import styled from "styled-components";
+import styled from "@emotion/styled";
 import mail from "../assets/mail.svg";
 import { device } from "../styles/device";
+import { useColorMode } from "@chakra-ui/react";
 
 const AutorDetail = ({
   nickName,
@@ -15,10 +16,12 @@ const AutorDetail = ({
   description,
   id,
 }: any) => {
+  const {colorMode} = useColorMode();
+  const isDark = colorMode === 'dark';
   const navigate = useNavigate();
 
   return id ? (
-    <AutorStyle>
+    <AutorStyle style={{backgroundColor: isDark? "rgba(82, 5, 133, 0.4)" :"rgba(82, 109, 130,0.8)"}}>
       <AvatarContainer>
         <img width={20} src={mail} />
       </AvatarContainer>
@@ -74,7 +77,7 @@ const AutorDetail = ({
       <SocialMedia />
     </AutorStyle>
   ) : (
-    "Cargando..."
+    <>"Cargando..."</>
   );
 };
 
