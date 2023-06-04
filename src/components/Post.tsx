@@ -11,6 +11,7 @@ import { PostButton } from "./Buttons";
 import { device, size as windowSizes } from "../styles/device";
 import useWindowPosition from "../hooks/useWindowPosition";
 import { useFocusedPostContext } from "../context/focusedPostContext";
+import { useColorMode } from "@chakra-ui/react";
 
 const Post = ({
   title,
@@ -21,6 +22,8 @@ const Post = ({
   isFullView = false,
   firstPost,
 }: any) => {
+  const { colorMode } = useColorMode();
+  const isDark = colorMode === "dark";
   const [focusedPost, setFocusedPost]: any = useFocusedPostContext();
   const navigate = useNavigate();
   const { pathname } = useLocation();
@@ -35,7 +38,7 @@ const Post = ({
     if (isNearest) {
       setFocusedPost({ title, content, style, id, userId });
     }
-  }, [isNearest,firstPost]);
+  }, [isNearest, firstPost]);
 
   const { viewportWidth } = useWindowPosition();
   const isMobile = viewportWidth <= parseFloat(windowSizes.tablet);
@@ -59,6 +62,7 @@ const Post = ({
       style={{
         ...style,
         ...fullViewHeight,
+        ...{ borderColor: !isDark ? 'rgb(0, 120,100)' : undefined },
         //border: isCentral ? "0.01px solid rgba(60, 33, 228, 0.05)" : "2px solid black",
       }}
     >

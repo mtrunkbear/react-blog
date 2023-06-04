@@ -22,7 +22,7 @@ const NavBar = () => {
 
   return (
     <Nav>
-      <Title style={{color: isDark? undefined: "rgb(0, 140,120"}}>{title}</Title>
+      <Title style={{color: isDark? undefined: "rgb(0, 120,100"}}>{title}</Title>
       <NavElements>
        
         <IconButton

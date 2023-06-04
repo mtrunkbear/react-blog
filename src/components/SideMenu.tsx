@@ -11,7 +11,6 @@ import { useColorMode } from "@chakra-ui/react";
 const SideMenu = () => {
   const { colorMode } = useColorMode();
   const isDark = colorMode === "dark";
-  console.log({ isDark });
   const { pathname } = useLocation();
   const { users }: any = useUserContext();
   const [focusedPost]: any = useFocusedPostContext();
@@ -26,10 +25,6 @@ const SideMenu = () => {
 
   useEffect(() => {
     if (users) {
-      console.log({
-        pathname,
-        nickName: pathname?.slice(2).toLocaleLowerCase(),
-      });
       const userOfNickName =
         pathname &&
         users.find(
@@ -37,8 +32,6 @@ const SideMenu = () => {
             nickName.toLowerCase() === pathname?.slice(2).toLocaleLowerCase() &&
             nickName.toLowerCase() !== ""
         );
-      console.log({ userOfNickName });
-      console.log({ focusedPost });
       if (userOfNickName) {
         setActualUser(userOfNickName);
       } else if (users && focusedPost) {

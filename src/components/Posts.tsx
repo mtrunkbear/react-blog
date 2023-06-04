@@ -23,7 +23,6 @@ const Posts = () => {
           ({ nickName }: any) =>
             nickName.toLowerCase() == userNickName.slice(1).toLocaleLowerCase()
         );
-        console.log(user);
         if (user) {
           const filtered = allPosts?.filter(
             (post: PostsProps) => post?.userId == user.id
