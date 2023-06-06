@@ -3,15 +3,17 @@ import Login from "./Login";
 import configIcon from "../assets/config-icon.svg";
 import { device } from "../styles/device";
 import { IconButton, useColorMode } from "@chakra-ui/react";
-import { MoonIcon, SunIcon } from '@chakra-ui/icons';
+import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import { useEffect } from "react";
+import { useNavigate } from "react-router";
 
 const NavBar = () => {
-  const title = "BLOG DE UN FULLSTRACK />";
+  const navigate = useNavigate();
+  const title = "Jotter />";
   const { colorMode, toggleColorMode } = useColorMode();
-  const isDark = colorMode === 'dark';
+  const isDark = colorMode === "dark";
 
-//To fix bug of initial color mode in chakra-ui
+  //To fix bug of initial color mode in chakra-ui
   useEffect(() => {
     const colorMode = localStorage.getItem("chakra-ui-color-mode");
     if (!colorMode) {
@@ -22,16 +24,17 @@ const NavBar = () => {
 
   return (
     <Nav>
-      <Title style={{color: isDark? undefined: "rgb(0, 120,100"}}>{title}</Title>
+      <Title style={{ color: isDark ? undefined : "rgb(0, 120,100" }}>
+        {title}
+      </Title>
       <NavElements>
-       
         <IconButton
-      aria-label="Toggle Dark Mode"
-      icon={isDark ? <SunIcon /> : <MoonIcon />}
-      onClick={toggleColorMode}
-    />
+          aria-label="Toggle Dark Mode"
+          icon={isDark ? <SunIcon /> : <MoonIcon />}
+          onClick={toggleColorMode}
+        />
         <Login />
-        <ConfigIcon src={configIcon} />
+        <ConfigIcon onClick={()=> navigate("/write")} src={configIcon} />
       </NavElements>
     </Nav>
   );

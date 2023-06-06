@@ -6,6 +6,7 @@ const Main = styled.main`
 
   flex-direction: row;
   margin-top: 150px;
+  justify-content: center;
   @media ${device.tablet} {
     width: 100%;
   }

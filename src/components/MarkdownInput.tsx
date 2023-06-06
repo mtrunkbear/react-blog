@@ -10,7 +10,7 @@ export function MarkdownInput() {
 
   const handleNewPost = () => {
     if (user) {
-      fetch(`${apiUrl}:4000/api/post/`, {
+      fetch(`${apiUrl}/api/post/`, {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
@@ -39,7 +39,7 @@ export function MarkdownInput() {
     <Container>
       <Title>Markdown Text</Title>
       <TextArea onChange={onInputChange} />
-      <PostButton style={{position:"relative"}} onClick={() => handleNewPost()} />
+      <PostButton style={{position:"relative"}} onClick={() => handleNewPost()} >{"Publicar"}</PostButton>
     </Container>
   );
 }
@@ -50,8 +50,8 @@ flex-direction: column;
 align-items: center;
 justify-content: center;
 
-  width: 100%;
-  height: 100%;
+  width: 95%;
+  height: 800px;
   padding: 13px;
   border-right: 1.5px solid rgba(15, 15, 15, 0.4);
   font-family: "Lato", sans-serif;

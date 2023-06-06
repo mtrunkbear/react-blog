@@ -5,8 +5,10 @@ import next from "../assets/next.png";
 import chatgpt from "../assets/chatgpt.svg";
 import all from "../assets/all.png";
 import { useColorMode } from "@chakra-ui/react";
+import { useNavigate } from "react-router";
 
 const Categories = () => {
+  const navigate = useNavigate();
   const { colorMode } = useColorMode();
   const isDark = colorMode === "dark";
   const categories = [
@@ -14,7 +16,7 @@ const Categories = () => {
     { name: "Node.js", icon: node },
     { name: "Next.js", icon: next },
     { name: "AI", icon: chatgpt },
-    { name: "Todos", icon: all },
+    { name: "Todos", icon: all, action: ()=>navigate("/") },
   ];
 
   return (
@@ -30,8 +32,9 @@ const Categories = () => {
           margin: 0,
         }}
       >
-        {categories.map(({ name, icon }: any) => (
+        {categories.map(({ name, icon,action }: any) => (
           <CategoriesButton
+          onClick={() =>action()}
             key={name}
             filterColor={isDark ? "violet" : "green"}
             style={

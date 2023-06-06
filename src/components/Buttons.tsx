@@ -1,6 +1,14 @@
-import React, { CSSProperties, MouseEventHandler, StyleHTMLAttributes } from "react";
+import React, {
+  CSSProperties,
+  MouseEventHandler,
+  StyleHTMLAttributes,
+} from "react";
 import styled from "@emotion/styled";
-import { StyleFunctionProps, StyleObjectOrFn, StyleProps } from "@chakra-ui/react";
+import {
+  StyleFunctionProps,
+  StyleObjectOrFn,
+  StyleProps,
+} from "@chakra-ui/react";
 
 interface CircleButtonProps {
   text?: string | undefined;
@@ -59,7 +67,7 @@ export const CircleButton: React.FC<CircleButtonProps> = ({
   const hasOnClick = Boolean(onClick);
 
   return (
-    <ButtonContainer size={size } style={styles} onClick={onClick}>
+    <ButtonContainer size={size} style={styles} onClick={onClick}>
       <Button hasOnClick={hasOnClick}>
         <Icon iconSize={iconSize}>
           {image && (
@@ -115,14 +123,20 @@ const PostButtonP = styled.p`
 
 export const PostButton = ({
   onClick,
-  style
+  style,
+  text,
+  children,
 }: {
   onClick: MouseEventHandler<HTMLButtonElement>;
   style: CSSProperties;
+  text?: string;
+  children?: Element | string;
 }) => {
   return (
     <PostButtonStyle style={style} onClick={onClick}>
-      <PostButtonP>Publicar</PostButtonP>
+      <PostButtonP>
+        {text || children ? text || children : "Ver más"}
+      </PostButtonP>
     </PostButtonStyle>
   );
 };
@@ -160,19 +174,25 @@ const CategoriesButtonContainer = styled(LinkStyle)`
 export const CategoriesButton = ({
   children,
   filterColor,
-  style
+  style,
+  onClick,
 }: {
   children: any;
   filterColor: string;
-  style?:any;
+  style?: any;
+  onClick?: () => void;
 }) => {
   const filterColors: { [key: string]: string } = {
     violet: " invert(0.4) sepia(1) hue-rotate(200deg) saturate(1000%)",
-    green: "invert(0.4) sepia(1) hue-rotate(110deg) saturate(200%)" 
+    green: "invert(0.4) sepia(1) hue-rotate(110deg) saturate(200%)",
   };
 
   return (
-    <CategoriesButtonContainer style={style} filterColor={filterColors[filterColor]}>
+    <CategoriesButtonContainer
+      onClick={onClick}
+      style={style}
+      filterColor={filterColors[filterColor]}
+    >
       {children}
     </CategoriesButtonContainer>
   );
