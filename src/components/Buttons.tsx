@@ -1,5 +1,6 @@
-import React, { MouseEventHandler } from "react";
+import React, { CSSProperties, MouseEventHandler, StyleHTMLAttributes } from "react";
 import styled from "@emotion/styled";
+import { StyleFunctionProps, StyleObjectOrFn, StyleProps } from "@chakra-ui/react";
 
 interface CircleButtonProps {
   text?: string | undefined;
@@ -114,12 +115,14 @@ const PostButtonP = styled.p`
 
 export const PostButton = ({
   onClick,
+  style
 }: {
   onClick: MouseEventHandler<HTMLButtonElement>;
+  style: CSSProperties;
 }) => {
   return (
-    <PostButtonStyle onClick={onClick}>
-      <PostButtonP>VER MÁS</PostButtonP>
+    <PostButtonStyle style={style} onClick={onClick}>
+      <PostButtonP>Publicar</PostButtonP>
     </PostButtonStyle>
   );
 };

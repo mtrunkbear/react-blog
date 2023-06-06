@@ -1,9 +1,56 @@
-import { useContext } from "react";
+import { useState } from "react";
 import styled from "@emotion/styled";
-import editorContext from "../context/editorContext";
+import { useUserContext } from "../context/userContext";
+import { PostButton } from "./Buttons";
 
+const apiUrl = import.meta.env.VITE_API_URL;
+export function MarkdownInput() {
+  const { user } = useUserContext();
+  const [text, setText] = useState();
+
+  const handleNewPost = () => {
+    if (user) {
+      fetch(`${apiUrl}:4000/api/post/`, {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        method: "POST",
+        body: JSON.stringify({
+          title: "by mk",
+          content: text,
+          userId: user.id,
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => console.log(data))
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  };
+  const onInputChange = (e: any) => {
+    const newValue = e.currentTarget.value;
+    setText(newValue);
+    // setText(newValue)
+  };
+
+  return (
+    <Container>
+      <Title>Markdown Text</Title>
+      <TextArea onChange={onInputChange} />
+      <PostButton style={{position:"relative"}} onClick={() => handleNewPost()} />
+    </Container>
+  );
+}
 const Container = styled.div`
-  width: 50%;
+margin:0;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+
+  width: 100%;
   height: 100%;
   padding: 13px;
   border-right: 1.5px solid rgba(15, 15, 15, 0.4);
@@ -26,20 +73,3 @@ const TextArea = styled.textarea`
   outline: none;
   font-size: 17px;
 `;
-
-export function MarkedInput({setText}:any) {
-  const { setMarkdownText } = useContext<any>(editorContext);
-
-  const onInputChange = (e: any) => {
-    const newValue = e.currentTarget.value;
-    setMarkdownText(newValue);
-    setText(newValue)
-  };
-
-  return (
-    <Container>
-      <Title>Markdown Text</Title>
-      <TextArea onChange={onInputChange} />
-    </Container>
-  );
-}
