@@ -15,18 +15,8 @@ import styled from "@emotion/styled";
 
 
 
-const Footer = styled.div`
-  height: 300px;
-  background-color: blue;
-  margin-top: 100px;
-`;
 
 function App() {
- /*  const { user }: any = useUserContext(); */
-
-
-  //TODO: handle new post request in hook
-
 
   return (<>
       <NavBar />
@@ -53,13 +43,16 @@ function App() {
         </div>
         <SideMenu />
       </CentralBody>
-
-      {/* 
-      <MarkedInput setText={setMarkdownText} />
-      <button onClick={handleNewPost}>SEND</button> */}
       <Footer />
       </>
   );
 }
+
+const Footer = styled.div`
+  height: 300px;
+  background-color: blue;
+  margin-top: 100px;
+`;
+
 
 export default App;
