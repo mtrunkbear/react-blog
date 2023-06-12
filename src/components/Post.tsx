@@ -28,8 +28,8 @@ const Post = ({
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const postRef = useRef<any>(null);
-
   const isNearest: any = useNearestElement(postRef);
+  const { viewportWidth } = useWindowPosition();
 
   useEffect(() => {
     if (!focusedPost?.id) {
@@ -40,14 +40,25 @@ const Post = ({
     }
   }, [isNearest, firstPost]);
 
-  const { viewportWidth } = useWindowPosition();
+
+
   const isMobile = viewportWidth <= parseFloat(windowSizes.tablet);
+  const withImageInTop = content.slice(0, 200).includes("[image]");
+  
+  const mobileShortenedContent = withImageInTop
+    ? content.split("[image]")[0] +
+      "[image]" +
+      content.split("[image]")[1].split(")")[0] +
+      ")"
+    : content.slice(0, 200);
+
+  console.log(mobileShortenedContent);
   const shortenedContent = isMobile
-    ? content.slice(0, 100)
+    ? mobileShortenedContent
     : content.slice(0, 250);
 
   const slicedContent = isFullView ? content : shortenedContent;
-  const fullViewHeight = isFullView ? { height: "100%" } : null;
+  const height = isFullView ? { height: "100%" } : null;
 
   useEffect(() => {
     const canControlScrollRestoration = "scrollRestoration" in window.history;
@@ -56,32 +67,24 @@ const Post = ({
     }
     window.scrollTo(0, 0);
   }, [pathname]);
+
+
+
   return (
     <Container
       ref={postRef}
       style={{
         ...style,
-        ...fullViewHeight,
-        ...{ borderColor: !isDark ? 'rgb(0, 120,100)' : undefined },
+        ...height,
+        ...{ borderColor: !isDark ? "rgb(0, 120,100)" : undefined },
         //border: isCentral ? "0.01px solid rgba(60, 33, 228, 0.05)" : "2px solid black",
       }}
     >
-      <div
-        style={{
-          position: "relative",
-          display: "flex",
-          width: "100%",
-          flexDirection: "row",
-          alignItems: "center",
-          padding: "10px",
-
-          boxSizing: "border-box",
-        }}
-      >
+      <TitleContainer>
         <p
           style={{
             fontWeight: 400,
-            fontSize: 20,
+            fontSize: isMobile? 18 : 20,
             color: "rgba(253, 182, 0, 1)",
           }}
         >
@@ -90,7 +93,7 @@ const Post = ({
         <p
           style={{
             fontWeight: 400,
-            fontSize: 20,
+            fontSize: isMobile? 16 : 20,
             marginLeft: "5px",
             color: "rgba(84, 227, 70, 0.9)",
           }}
@@ -102,14 +105,18 @@ const Post = ({
           style={{ position: "absolute", right: 10 }}
           width={16}
         />
-      </div>
+      </TitleContainer>
 
       <ResultArea
+        isFullView={isFullView}
         style={{
           background:
             isNearest &&
-            "linear-gradient( 180deg,rgba(120, 100, 200, 0.1) 60.86%, rgba(217, 217, 217, 0) 100% )",
+            (isDark
+              ? "linear-gradient( 180deg,rgba(120, 100, 200, 0.1) 60.86%, rgba(217, 217, 217, 0) 100% )"
+              : "linear-gradient( 180deg,rgba(137, 188, 161, 0.2) 60.86%, rgba(217, 217, 217, 0) 100% )"),
         }}
+        isDark={isDark}
       >
         <ReactMarkdown
           children={slicedContent ? slicedContent : "cargando.."}
@@ -172,7 +179,7 @@ const Container = styled(containerToRef)`
   font-family: "Lato", sans-serif;
   background-color: rgba(60, 33, 228, 0.05);
   margin-top: 15px;
-  margin-bottom: 10px;
+  margin-bottom: 50px;
   text-align: left;
   padding: 30px;
   box-sizing: border-box;
@@ -193,21 +200,29 @@ const Container = styled(containerToRef)`
 
   @media (${device.mobileS}) {
     height: 300px;
+    padding:0;
+    border-radius: 10px;
+    padding-top: 30px;
+  }
+  /*   @media (${device.mobileL}) {
+    padding: 0;
+    height: 300px;
+  } */
+  @media (${device.tablet}) {
+    border-radius: 40px;
+    padding: 20px;
   }
   @media (${device.laptop}) {
     height: 400px;
   }
 `;
 
-/* const Title = styled.div`
-  font-size: 22px;
-  font-weight: 600;
-  margin-bottom: 1em;
-  padding: 8px 0;
-  border-bottom: 1px solid rgba(15, 15, 15, 0.3);
-`; */
 
-const ResultArea = styled.div`
+
+const ResultArea = styled.div<{ isFullView: Boolean; isDark: Boolean, isMobile:Boolean }>`
+  display: flex;
+
+  flex-direction: column;
   padding: 30px;
   padding-top: 4px;
   box-sizing: border-box;
@@ -216,7 +231,6 @@ const ResultArea = styled.div`
   width: 100%;
   height: 90%;
   border: none;
-  font-size: 17px;
   text-align: left;
   transition: background 2s linear;
   background: linear-gradient(
@@ -224,6 +238,44 @@ const ResultArea = styled.div`
     rgba(217, 217, 217, 0.04) 70.86%,
     rgba(217, 217, 217, 0) 100%
   );
+  img {
+    position: relative;
+    max-width: 100%;
+    max-height: ${({ isFullView }) => (isFullView ? "100%" : "20%")};
+    /*  max-height: 20%;  */
+    width: 100%;
+    object-fit: cover;
+  }
+  @media (${device.mobileS}){
+    font-size: 14px;
+  }
+  @media (${device.tablet}){
+    font-size: 16px;
+  }
+ 
+`;
+
+const TitleContainer = styled.div`
+  position: relative;
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  align-items: center;
+  padding: 10px;
+  box-sizing: border-box;
+
+  @media (${device.mobileS}) {
+    height: 20px;
+    margin-bottom: 20px;
+  
+    padding: 0;
+    padding-left: 10px;
+  }
+  @media (${device.laptop}) {
+    height: 60px;
+    margin-bottom: 5px;
+    padding: 20px;
+  }
 `;
 
 export default Post;

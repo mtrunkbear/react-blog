@@ -47,7 +47,7 @@ const SideMenu = () => {
 
   const { firstName, lastName, occupation, description, id, nickName } =
     actualUser;
-
+if(pathname.includes("write")) return  null;
   return (
     <SideMenuContainer
       style={{

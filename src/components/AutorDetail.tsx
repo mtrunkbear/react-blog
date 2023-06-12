@@ -22,9 +22,9 @@ const AutorDetail = ({
 
   return id ? (
     <AutorStyle style={{backgroundColor: isDark? "rgba(82, 5, 133, 0.4)" :"rgba(82, 109, 130,0.8)"}}>
-      <AvatarContainer>
+      <MailIconContainer>
         <img width={20} src={mail} />
-      </AvatarContainer>
+      </MailIconContainer>
 
       <CircleButton
         onClick={() => navigate("/@" + nickName)}
@@ -81,7 +81,7 @@ const AutorDetail = ({
   );
 };
 
-const AvatarContainer = styled.div`
+const MailIconContainer = styled.div`
   display: flex;
   height: 25px;
   width: 100%;

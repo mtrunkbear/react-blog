@@ -39,7 +39,7 @@ function App() {
             alignItems: "center",
           }}
         >
-          <Categories />
+          {/* <Categories /> */}
           {/*TODO: handle routes in a config or something similar to improve cleancode*/}
           <Routes>
             <Route path="/:userNickName" element={<Posts />} />

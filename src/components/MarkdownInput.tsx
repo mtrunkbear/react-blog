@@ -2,6 +2,7 @@ import { useState } from "react";
 import styled from "@emotion/styled";
 import { useUserContext } from "../context/userContext";
 import { PostButton } from "./Buttons";
+import MDEditor, { selectWord } from "@uiw/react-md-editor";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 export function MarkdownInput() {
@@ -9,15 +10,17 @@ export function MarkdownInput() {
   const [text, setText] = useState();
 
   const handleNewPost = () => {
+    const token = localStorage.getItem("token");
     if (user) {
       fetch(`${apiUrl}/api/post/`, {
         headers: {
+          Authorization: `Bearer ${token}`,
           Accept: "application/json",
           "Content-Type": "application/json",
         },
         method: "POST",
         body: JSON.stringify({
-          title: "by mk",
+          title: "new",
           content: text,
           userId: user.id,
         }),
@@ -38,23 +41,36 @@ export function MarkdownInput() {
   return (
     <Container>
       <Title>Markdown Text</Title>
-      <TextArea onChange={onInputChange} />
-      <PostButton style={{position:"relative"}} onClick={() => handleNewPost()} >{"Publicar"}</PostButton>
+      {/*   <TextArea onChange={onInputChange} /> */}
+      <div style={{ width: "100%" }}>
+        <MDEditor
+          height={600}
+          /* style={{margin:0, width: "100vw"}} */ value={text}
+          onChange={setText}
+        />
+      </div>
+
+      <PostButton
+        style={{ position: "relative" }}
+        onClick={() => handleNewPost()}
+      >
+        {"Publicar"}
+      </PostButton>
     </Container>
   );
 }
 const Container = styled.div`
-margin:0;
-display: flex;
-flex-direction: column;
-align-items: center;
-justify-content: center;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 
   width: 95%;
   height: 800px;
-  padding: 13px;
   border-right: 1.5px solid rgba(15, 15, 15, 0.4);
   font-family: "Lato", sans-serif;
+  
 `;
 
 const Title = styled.div`
@@ -72,4 +88,5 @@ const TextArea = styled.textarea`
   border: none;
   outline: none;
   font-size: 17px;
+  
 `;
