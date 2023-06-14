@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import AutorDetail from "./AutorDetail";
+import AutorDetail from "./AuthorDetail";
 import ArticlesMenu from "./ArticlesMenu";
 import { device } from "../styles/device";
 import { useFocusedPostContext } from "../context/focusedPostContext";
@@ -85,6 +85,7 @@ const SideMenuContainer = styled.div`
   align-items: center;
   top: 100px;
   transition: top 0.4s linear;
+
   @media ${device.laptopM} {
     display: flex;
   }

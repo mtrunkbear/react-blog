@@ -12,6 +12,7 @@ import { device, size as windowSizes } from "../styles/device";
 import useWindowPosition from "../hooks/useWindowPosition";
 import { useFocusedPostContext } from "../context/focusedPostContext";
 import { useColorMode } from "@chakra-ui/react";
+import AuthorMobileDetail from "./AuthorMobileDetail";
 
 const Post = ({
   title,
@@ -40,24 +41,26 @@ const Post = ({
     }
   }, [isNearest, firstPost]);
 
-
-
   const isMobile = viewportWidth <= parseFloat(windowSizes.tablet);
-  const withImageInTop = content.slice(0, 200).includes("[image]");
-  
-  const mobileShortenedContent = withImageInTop
+  const hasImage = content.slice(0, 200).includes("[image]");
+
+  const MAX_MOBILE_CONTENT_LENGTH = 100;
+  const MAX_DESKTOP_CONTENT_LENGTH = 250;
+
+  const truncatedContent = content.slice(
+    0,
+    isMobile ? MAX_MOBILE_CONTENT_LENGTH : MAX_DESKTOP_CONTENT_LENGTH
+  );
+
+  const truncatedWithImage = hasImage
     ? content.split("[image]")[0] +
       "[image]" +
       content.split("[image]")[1].split(")")[0] +
       ")"
-    : content.slice(0, 200);
+    : truncatedContent;
 
-  console.log(mobileShortenedContent);
-  const shortenedContent = isMobile
-    ? mobileShortenedContent
-    : content.slice(0, 250);
+  const displayedContent = isFullView ? content : truncatedWithImage;
 
-  const slicedContent = isFullView ? content : shortenedContent;
   const height = isFullView ? { height: "100%" } : null;
 
   useEffect(() => {
@@ -67,8 +70,6 @@ const Post = ({
     }
     window.scrollTo(0, 0);
   }, [pathname]);
-
-
 
   return (
     <Container
@@ -80,11 +81,13 @@ const Post = ({
         //border: isCentral ? "0.01px solid rgba(60, 33, 228, 0.05)" : "2px solid black",
       }}
     >
+      {isMobile && <AuthorMobileDetail userId={userId} />}
+
       <TitleContainer>
         <p
           style={{
             fontWeight: 400,
-            fontSize: isMobile? 18 : 20,
+            fontSize: isMobile ? 18 : 20,
             color: "rgba(253, 182, 0, 1)",
           }}
         >
@@ -93,7 +96,7 @@ const Post = ({
         <p
           style={{
             fontWeight: 400,
-            fontSize: isMobile? 16 : 20,
+            fontSize: isMobile ? 16 : 20,
             marginLeft: "5px",
             color: "rgba(84, 227, 70, 0.9)",
           }}
@@ -119,7 +122,7 @@ const Post = ({
         isDark={isDark}
       >
         <ReactMarkdown
-          children={slicedContent ? slicedContent : "cargando.."}
+          children={displayedContent ? displayedContent : "cargando.."}
           components={{
             code({ node, inline, className, children, ...props }) {
               const match = /language-(\w+)/.exec(className || "");
@@ -200,9 +203,9 @@ const Container = styled(containerToRef)`
 
   @media (${device.mobileS}) {
     height: 300px;
-    padding:0;
+    padding: 0;
     border-radius: 10px;
-    padding-top: 30px;
+    padding-top: 10px;
   }
   /*   @media (${device.mobileL}) {
     padding: 0;
@@ -217,9 +220,11 @@ const Container = styled(containerToRef)`
   }
 `;
 
-
-
-const ResultArea = styled.div<{ isFullView: Boolean; isDark: Boolean, isMobile:Boolean }>`
+const ResultArea = styled.div<{
+  isFullView: Boolean;
+  isDark: Boolean;
+  isMobile: Boolean;
+}>`
   display: flex;
 
   flex-direction: column;
@@ -246,13 +251,12 @@ const ResultArea = styled.div<{ isFullView: Boolean; isDark: Boolean, isMobile:B
     width: 100%;
     object-fit: cover;
   }
-  @media (${device.mobileS}){
+  @media (${device.mobileS}) {
     font-size: 14px;
   }
-  @media (${device.tablet}){
+  @media (${device.tablet}) {
     font-size: 16px;
   }
- 
 `;
 
 const TitleContainer = styled.div`
@@ -267,7 +271,7 @@ const TitleContainer = styled.div`
   @media (${device.mobileS}) {
     height: 20px;
     margin-bottom: 20px;
-  
+
     padding: 0;
     padding-left: 10px;
   }
