@@ -12,7 +12,7 @@ import { device, size as windowSizes } from "../styles/device";
 import useWindowPosition from "../hooks/useWindowPosition";
 import { useFocusedPostContext } from "../context/focusedPostContext";
 import { useColorMode } from "@chakra-ui/react";
-import AuthorMobileDetail from "./AuthorMobileDetail";
+import AuthorMobilePostSection from "./AuthorMobilePostSection";
 
 const Post = ({
   title,
@@ -30,7 +30,8 @@ const Post = ({
   const { pathname } = useLocation();
   const postRef = useRef<any>(null);
   const isNearest: any = useNearestElement(postRef);
-  const { viewportWidth } = useWindowPosition();
+  const { viewportWidth } = useWindowPosition();  
+  const isMobile = viewportWidth <= parseFloat(windowSizes.laptop);
 
   useEffect(() => {
     if (!focusedPost?.id) {
@@ -41,7 +42,6 @@ const Post = ({
     }
   }, [isNearest, firstPost]);
 
-  const isMobile = viewportWidth <= parseFloat(windowSizes.tablet);
   const hasImage = content.slice(0, 200).includes("[image]");
 
   const MAX_MOBILE_CONTENT_LENGTH = 100;
@@ -81,7 +81,7 @@ const Post = ({
         //border: isCentral ? "0.01px solid rgba(60, 33, 228, 0.05)" : "2px solid black",
       }}
     >
-      {isMobile && <AuthorMobileDetail userId={userId} />}
+      {isMobile && <AuthorMobilePostSection userId={userId} />}
 
       <TitleContainer>
         <p

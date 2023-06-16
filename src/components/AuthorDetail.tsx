@@ -5,8 +5,9 @@ import githubIcon from "../assets/github.svg";
 import linkedinIcon from "../assets/linkedin.svg";
 import styled from "@emotion/styled";
 import mail from "../assets/mail.svg";
-import { device } from "../styles/device";
+import { device, size as windowSizes } from "../styles/device";
 import { useColorMode } from "@chakra-ui/react";
+import useWindowPosition from "../hooks/useWindowPosition";
 
 const AutorDetail = ({
   nickName,
@@ -16,63 +17,76 @@ const AutorDetail = ({
   description,
   id,
 }: any) => {
-  const {colorMode} = useColorMode();
-  const isDark = colorMode === 'dark';
+  const { viewportWidth } = useWindowPosition();
+  const isMobile = viewportWidth <= parseFloat(windowSizes.laptop);
+  const { colorMode } = useColorMode();
+  const isDark = colorMode === "dark";
   const navigate = useNavigate();
 
   return id ? (
-    <AutorStyle style={{backgroundColor: isDark? "rgba(82, 5, 133, 0.4)" :"rgba(82, 109, 130,0.8)"}}>
-      <MailIconContainer>
-        <img width={20} src={mail} />
-      </MailIconContainer>
-
-      <CircleButton
-        onClick={() => navigate("/@" + nickName)}
-        image={avatar}
-        size={80}
-      />
-      <div>
-        <p
-          style={{
-            fontSize: "14px",
-            fontWeight: 200,
-            textAlign: "left",
-            marginBottom: 0,
-            marginLeft: 10,
-            height: 15,
-          }}
-        >
-          Hola! soy:
-        </p>
-        <h3
-          style={{
-            margin: 0,
-            height: 12,
-            fontWeight: "400",
-            textAlign: "left",
-            color: "rgba(84, 227, 70, 1)",
-          }}
+    <AutorStyle
+      style={{
+        backgroundColor: isDark
+          ? "rgba(82, 5, 133, 0.4)"
+          : "rgba(82, 109, 130,0.8)",
+      }}
+    >
+      <ProfileContainer>
+        <MailIconContainer>
+          <img width={20} src={mail} />
+        </MailIconContainer>
+        <CircleButton
           onClick={() => navigate("/@" + nickName)}
-        >
-          {`<${firstName + lastName ? firstName + lastName : nickName}/>`}
-        </h3>
-        <p
-          style={{
-            fontSize: "14px",
-            fontWeight: 600,
-            textAlign: "left",
-            marginLeft: 10,
-            height: "auto",
-          }}
-        >
-          {occupation}
-        </p>
-        <p style={{ fontSize: "12px", fontWeight: 200, textAlign: "justify" }}>
-          {/*  Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates
+          image={avatar}
+          size={isMobile ? 30 : 80}
+        />
+        <div>
+          {!isMobile && (
+            <p
+              style={{
+                fontSize: "14px",
+                fontWeight: 200,
+                textAlign: "left",
+                marginBottom: 0,
+                marginLeft: 10,
+                height: 15,
+              }}
+            >
+              Hola! soy:
+            </p>
+          )}
+          <h3
+            style={{
+              margin: 0,
+              height: 12,
+              fontWeight: "400",
+              textAlign: "left",
+              color: "rgba(84, 227, 70, 1)",
+            }}
+            onClick={() => navigate("/@" + nickName)}
+          >
+            {`<${firstName + lastName ? firstName + lastName : nickName}/>`}
+          </h3>
+          <p
+            style={{
+              fontSize: "14px",
+              fontWeight: 600,
+              textAlign: "left",
+              marginLeft: 10,
+              height: "auto",
+            }}
+          >
+            {occupation}
+          </p>
+          <p
+            style={{ fontSize: "12px", fontWeight: 200, textAlign: "justify" }}
+          >
+            {/*  Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates
           autem recusandae accusamus alias tempore enim cupiditate consequuntur */}
-          {description?.slice(0, 180)}
-        </p>
-      </div>
+            {description?.slice(0, 180)}
+          </p>
+        </div>
+      </ProfileContainer>
 
       <SocialMedia />
     </AutorStyle>
@@ -82,7 +96,7 @@ const AutorDetail = ({
 };
 
 const MailIconContainer = styled.div`
-  display: flex;
+  display: none;
   height: 25px;
   width: 100%;
   margin-bottom: -25px;
@@ -137,28 +151,50 @@ const RRSSLink = ({ icon, name, link }: any) => {
 };
 const AutorStyle = styled.div`
   display: flex;
-  border-radius: 32px;
   flex-direction: column;
   height: 370px;
-  background-color: rgba(82, 5, 133, 0.4);
   align-items: center;
   padding: 20px;
   padding-top: 0px;
   padding-bottom: 5px;
-  box-sizing: border-box;
-  justify-content: space-evenly;
-  box-shadow: 12px 13px 16px 2px rgba(0, 0, 0, 0.25);
-  border: 1px solid rgba(0, 0, 0, 1);
-  width: 96%;
 
+  box-sizing: border-box;
   @media ${device.mobileS} {
+    width: 100%;
     height: 200px;
-    flex-direction: row;
+    border-radius: 20px 20px 0 0;
+    border-style: solid solid none solid;
   }
   @media ${device.laptop} {
+    width: 96%;
     height: 370px;
     flex-direction: column;
+    justify-content: space-evenly;
+    box-shadow: 12px 13px 16px 2px rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(0, 0, 0, 1);
+
+    border-radius: 32px;
   }
+`;
+const ProfileContainer  = styled.div`
+
+@media ${device.mobileS}{
+
+  display: flex;
+  flex-direction: row;
+  height: 150px;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 90%;
+
+
+}
+@media ${device.laptop}{
+  flex-direction: column;
+height: 80%;
+}
+
+
 `;
 
 export default AutorDetail;

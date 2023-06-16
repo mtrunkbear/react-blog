@@ -169,6 +169,11 @@ const CategoriesButtonContainer = styled(LinkStyle)`
   align-items: center;
   color: rgba(253, 182, 0, 1);
   font-size: 13px;
+
+  @media (max-width: 768px){
+    width: 100%;
+
+  }
 `;
 
 export const CategoriesButton = ({
