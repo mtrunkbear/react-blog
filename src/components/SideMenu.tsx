@@ -51,10 +51,13 @@ const SideMenu = () => {
   const { firstName, lastName, occupation, description, id, nickName } =
     actualUser;
 
-  const sideMenuContainerBackgroundColor =
-    !isMobile && (isDark ? "rgba(82, 5, 133, 0.4)" : "rgb(157, 188, 191)");
+  const sideMenuContainerBackgroundColor = !isMobile
+    ? isDark
+      ? "rgba(82, 5, 133, 0.4)"
+      : "rgb(157, 188, 191)"
+    : undefined;
 
-  if (pathname.includes("write")) return null;
+  if (pathname.includes("write")|| (isMobile && !pathname.includes("@"))) return null;
   return (
     <SideMenuContainer
       style={{
@@ -86,7 +89,7 @@ const SideMenuContainer = styled.div`
   border-radius: 45px;
   justify-content: space-evenly;
   align-items: center;
-  
+
   transition: top 0.4s linear;
   @media ${device.mobileS} {
     top: 0;

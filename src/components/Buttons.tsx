@@ -171,7 +171,10 @@ const CategoriesButtonContainer = styled(LinkStyle)`
   font-size: 13px;
 
   @media (max-width: 768px){
-    width: 100%;
+    width: 20%;
+    font-size: 10px;
+    margin-left:2px;
+    margin-right:2px;
 
   }
 `;

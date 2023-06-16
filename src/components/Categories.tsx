@@ -8,8 +8,11 @@ import { useColorMode } from "@chakra-ui/react";
 import { useNavigate } from "react-router";
 import styled from "@emotion/styled";
 import { device, size as windowSizes } from "../styles/device";
+import useWindowPosition from "../hooks/useWindowPosition";
 
 const Categories = () => {
+  const { viewportWidth } = useWindowPosition();
+  const isMobile = viewportWidth <= parseFloat(windowSizes.laptop);
   const navigate = useNavigate();
   const { colorMode } = useColorMode();
   const isDark = colorMode === "dark";
@@ -47,7 +50,7 @@ const Categories = () => {
             >
               <img
                 src={icon}
-                width={22}
+                width={isMobile ? 14 : 22}
                 style={
                   name == "Next.js" && !isDark
                     ? { filter: " invert(1)" }
@@ -65,8 +68,7 @@ const Categories = () => {
 
 const CategoriesContainer = styled.nav`
   display: flex;
- height: 85px;
-  margin-bottom: "60px";
+  height: 85px;
   margin-top: 70px;
   box-sizing: content-box;
   width: 95%;
@@ -78,7 +80,6 @@ const CategoriesContainer = styled.nav`
 `;
 
 const CategoriesUl = styled.ul`
- 
   list-style-type: none;
   padding-left: 0;
   align-items: center;
@@ -87,7 +88,7 @@ const CategoriesUl = styled.ul`
   padding: 0;
   width: 100%;
 
-  @media ${device.mobileS} {
+  /*  @media ${device.mobileS} {
     display: grid;
     box-sizing: content-box;
     grid-template-columns: repeat(3, 29%);
@@ -95,6 +96,11 @@ const CategoriesUl = styled.ul`
   }
   @media ${device.mobileL} {
     display:flex;
+    flex-direction: row;
+  } */
+
+  @media ${device.mobileS} {
+    display: flex;
     flex-direction: row;
   }
 `;
