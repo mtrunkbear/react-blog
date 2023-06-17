@@ -81,7 +81,7 @@ const Post = ({
         //border: isCentral ? "0.01px solid rgba(60, 33, 228, 0.05)" : "2px solid black",
       }}
     >
-      {isMobile && <AuthorMobilePostSection userId={userId} />}
+      {isMobile && !pathname.includes("@") &&<AuthorMobilePostSection userId={userId} />}
 
       <TitleContainer>
         <p

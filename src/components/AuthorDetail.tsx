@@ -27,7 +27,7 @@ const AutorDetail = ({
     <AutorStyle
       style={{
         backgroundColor: isDark
-          ? "rgba(82, 5, 133, 0.4)"
+          ?isMobile? "rgba(82, 5, 133, 0.1)":"rgba(82, 5, 133, 0.4)"
           : "rgba(82, 109, 130,0.8)",
       }}
     >
@@ -163,7 +163,7 @@ const AutorStyle = styled.div`
     width: 100%;
     height: 200px;
     border-radius: 20px 20px 0 0;
-    border-style: solid solid none solid;
+    border-style: none none none none;
   }
   @media ${device.laptop} {
     width: 96%;
@@ -183,14 +183,17 @@ const ProfileContainer  = styled.div`
   display: flex;
   flex-direction: row;
   height: 150px;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-evenly;
   width: 90%;
+  margin-top:10px;
 
 
 }
 @media ${device.laptop}{
   flex-direction: column;
+  magin-top:0;
+  align-items: center;
 height: 80%;
 }
 
