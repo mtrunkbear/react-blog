@@ -23,7 +23,7 @@ const Login: any = () => {
       <Menu>
         <MenuButton as={LoginButton} rightIcon={<ChevronDownIcon />}>
           <>
-            {user && user.nickName}
+            {user?.nickName && user.nickName}
             <ChevronDownIcon />
           </>
         </MenuButton>
