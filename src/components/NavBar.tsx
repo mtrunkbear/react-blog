@@ -30,6 +30,7 @@ const NavBar = () => {
       <NavElements>
         <IconButton
           aria-label="Toggle Dark Mode"
+        size={"sm"}
           icon={isDark ? <SunIcon /> : <MoonIcon />}
           onClick={toggleColorMode}
         />
@@ -83,7 +84,20 @@ const NavElements = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 300px;
+  width: 55%;
+  @media ${device.mobileM}{
+    width: 60%;
+  }
+  @media ${device.mobileL}{
+    width: 50%;
+  }
+  @media ${device.mobileXL}{
+    width: 40%;
+  }
+  @media ${device.tablet}{
+    width: 300px;
+  }
+  
 `;
 
 const ConfigIcon = styled.img`

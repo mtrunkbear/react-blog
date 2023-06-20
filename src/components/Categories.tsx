@@ -6,8 +6,13 @@ import chatgpt from "../assets/chatgpt.svg";
 import all from "../assets/all.png";
 import { useColorMode } from "@chakra-ui/react";
 import { useNavigate } from "react-router";
+import styled from "@emotion/styled";
+import { device, size as windowSizes } from "../styles/device";
+import useWindowPosition from "../hooks/useWindowPosition";
 
 const Categories = () => {
+  const { viewportWidth } = useWindowPosition();
+  const isMobile = viewportWidth <= parseFloat(windowSizes.laptop);
   const navigate = useNavigate();
   const { colorMode } = useColorMode();
   const isDark = colorMode === "dark";
@@ -16,25 +21,15 @@ const Categories = () => {
     { name: "Node.js", icon: node },
     { name: "Next.js", icon: next },
     { name: "AI", icon: chatgpt },
-    { name: "Todos", icon: all, action: ()=>navigate("/") },
+    { name: "Todos", icon: all, action: () => navigate("/") },
   ];
 
   return (
-    <nav style={{ width: "90%", height: "50px", marginBottom: "60px" }}>
-      <ul
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          listStyleType: "none",
-          paddingLeft: 0,
-          alignItems: "center",
-          height: "100%",
-          margin: 0,
-        }}
-      >
-        {categories.map(({ name, icon,action }: any) => (
+    <CategoriesContainer>
+      <CategoriesUl>
+        {categories.map(({ name, icon, action }: any) => (
           <CategoriesButton
-          onClick={() =>action()}
+            onClick={() => action()}
             key={name}
             filterColor={isDark ? "violet" : "green"}
             style={
@@ -55,16 +50,58 @@ const Categories = () => {
             >
               <img
                 src={icon}
-                width={22}
-                style={name == "Next.js" &&!isDark ? { filter: " invert(1)" } : undefined}
+                width={isMobile ? 14 : 22}
+                style={
+                  name == "Next.js" && !isDark
+                    ? { filter: " invert(1)" }
+                    : undefined
+                }
               />
               {name.toUpperCase()}
             </li>
           </CategoriesButton>
         ))}
-      </ul>
-    </nav>
+      </CategoriesUl>
+    </CategoriesContainer>
   );
 };
 
+const CategoriesContainer = styled.nav`
+  display: flex;
+  height: 85px;
+  margin-top: 70px;
+  box-sizing: content-box;
+  width: 95%;
+  @media ${device.laptop} {
+    width: 90%;
+    margin-top: 0;
+    height: 50px;
+  }
+`;
+
+const CategoriesUl = styled.ul`
+  list-style-type: none;
+  padding-left: 0;
+  align-items: center;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+
+  /*  @media ${device.mobileS} {
+    display: grid;
+    box-sizing: content-box;
+    grid-template-columns: repeat(3, 29%);
+    grid-gap: 0px 20px;
+  }
+  @media ${device.mobileL} {
+    display:flex;
+    flex-direction: row;
+  } */
+
+  @media ${device.mobileS} {
+    display: flex;
+    flex-direction: row;
+  }
+`;
 export default Categories;

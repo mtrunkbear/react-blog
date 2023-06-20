@@ -10,10 +10,17 @@ import Categories from "./components/Categories";
 import { Route, Routes } from "react-router-dom";
 import styled from "@emotion/styled";
 
+import { size as windowSizes } from "./styles/device";
+import useWindowPosition from "./hooks/useWindowPosition";
+
 function App() {
+  const { viewportWidth } = useWindowPosition();
+  const isMobile = viewportWidth <= parseFloat(windowSizes.laptop);
+
   return (
     <>
       <NavBar />
+      {isMobile && <Categories />}
       <CentralBody>
         <div
           style={{
@@ -23,7 +30,7 @@ function App() {
             alignItems: "center",
           }}
         >
-          <Categories />
+          {!isMobile && <Categories />}
           {/*TODO: handle routes in a config or something similar to improve cleancode*/}
           <Routes>
             <Route path="/:userNickName" element={<Posts />} />
