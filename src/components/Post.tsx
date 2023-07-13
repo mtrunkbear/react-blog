@@ -13,6 +13,7 @@ import useWindowPosition from "../hooks/useWindowPosition";
 import { useFocusedPostContext } from "../context/focusedPostContext";
 import { useColorMode } from "@chakra-ui/react";
 import AuthorMobilePostSection from "./AuthorMobilePostSection";
+import useScrollRestorarion from "../hooks/useScrollRestoration";
 
 const Post = ({
   title,
@@ -28,9 +29,10 @@ const Post = ({
   const [focusedPost, setFocusedPost]: any = useFocusedPostContext();
   const navigate = useNavigate();
   const { pathname } = useLocation();
+  useScrollRestorarion(pathname);
   const postRef = useRef<any>(null);
   const isNearest: any = useNearestElement(postRef);
-  const { viewportWidth } = useWindowPosition();  
+  const { viewportWidth } = useWindowPosition();
   const isMobile = viewportWidth <= parseFloat(windowSizes.laptop);
 
   useEffect(() => {
@@ -63,14 +65,6 @@ const Post = ({
 
   const height = isFullView ? { height: "100%" } : null;
 
-  useEffect(() => {
-    const canControlScrollRestoration = "scrollRestoration" in window.history;
-    if (canControlScrollRestoration) {
-      window.history.scrollRestoration = "manual";
-    }
-    window.scrollTo(0, 0);
-  }, [pathname]);
-
   return (
     <Container
       ref={postRef}
@@ -81,7 +75,9 @@ const Post = ({
         //border: isCentral ? "0.01px solid rgba(60, 33, 228, 0.05)" : "2px solid black",
       }}
     >
-      {isMobile && !pathname.includes("@") &&<AuthorMobilePostSection userId={userId} />}
+      {isMobile && !pathname.includes("@") && (
+        <AuthorMobilePostSection userId={userId} />
+      )}
 
       <TitleContainer>
         <p
@@ -108,6 +104,13 @@ const Post = ({
           style={{ position: "absolute", right: 10 }}
           width={16}
         />
+        {
+          <img
+            src={guardar}
+            style={{ position: "absolute", right: 10 }}
+            width={16}
+          />
+        }
       </TitleContainer>
 
       <ResultArea
