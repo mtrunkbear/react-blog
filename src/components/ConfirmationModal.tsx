@@ -9,7 +9,7 @@ import {
   Button,
 } from "@chakra-ui/react";
 
-function ConfirmationModal({ isOpen, onClose }: any) {
+function ConfirmationModal({ isOpen, onClose, onSubmit }: any) {
   return (
     <>
       <Modal  isOpen={isOpen} onClose={onClose} isCentered>
@@ -26,7 +26,7 @@ function ConfirmationModal({ isOpen, onClose }: any) {
           </ModalBody>
 
           <ModalFooter>
-            <Button background={"red.900"} mr={3}>
+            <Button onClick={onSubmit} background={"red.900"} mr={3}>
               Eliminar
             </Button>
             <Button background={"gray.700"} onClick={onClose} variant="ghost">Cancelar</Button>

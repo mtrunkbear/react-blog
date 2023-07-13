@@ -4,34 +4,12 @@ import { useUserContext } from "../context/userContext";
 import { PostButton } from "./Buttons";
 import MDEditor, { selectWord } from "@uiw/react-md-editor";
 
-const apiUrl = import.meta.env.VITE_API_URL;
+import { createPost } from "../api/postsAPI";
+
 export function MarkdownInput() {
   const { user } = useUserContext();
   const [text, setText] = useState();
 
-  const handleNewPost = () => {
-    const token = localStorage.getItem("token");
-    if (user) {
-      fetch(`${apiUrl}/api/post/`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        method: "POST",
-        body: JSON.stringify({
-          title: "new",
-          content: text,
-          userId: user.id,
-        }),
-      })
-        .then((response) => response.json())
-        .then((data) => console.log(data))
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-  };
   const onInputChange = (e: any) => {
     const newValue = e.currentTarget.value;
     setText(newValue);
@@ -50,10 +28,7 @@ export function MarkdownInput() {
         />
       </div>
 
-      <PostButton
-        style={{ position: "relative" }}
-        onClick={() => handleNewPost()}
-      >
+      <PostButton style={{ position: "relative" }} onClick={()=>createPost({title:"New Post",user,content:text})}>
         {"Publicar"}
       </PostButton>
     </Container>
@@ -70,7 +45,6 @@ const Container = styled.div`
   height: 800px;
   border-right: 1.5px solid rgba(15, 15, 15, 0.4);
   font-family: "Lato", sans-serif;
-  
 `;
 
 const Title = styled.div`
@@ -88,5 +62,4 @@ const TextArea = styled.textarea`
   border: none;
   outline: none;
   font-size: 17px;
-  
 `;

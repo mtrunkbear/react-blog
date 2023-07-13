@@ -17,6 +17,7 @@ import AuthorMobilePostSection from "./AuthorMobilePostSection";
 import useScrollRestorarion from "../hooks/useScrollRestoration";
 import { useUserContext } from "../context/userContext";
 import ConfirmationModal from "./ConfirmationModal";
+import { deletePost } from "../api/postsAPI";
 
 const Post = ({
   title,
@@ -70,6 +71,12 @@ const Post = ({
   const displayedContent = isFullView ? content : truncatedWithImage;
 
   const height = isFullView ? { height: "100%" } : null;
+
+  const handleOnSuccessDelete = () => {
+    alert("Post Eliminado");
+    setModalOpen(false);
+    window.location.href = "/";
+  };
 
   return (
     <>
@@ -173,6 +180,9 @@ const Post = ({
       <ConfirmationModal
         isOpen={modalOpen}
         onClose={() => setModalOpen(false)}
+        onSubmit={() =>
+          deletePost({ user, id, callback: handleOnSuccessDelete })
+        }
       />
     </>
   );
