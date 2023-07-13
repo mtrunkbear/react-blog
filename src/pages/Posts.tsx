@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import Post from "./Post";
+import Post from "../components/Post";
 import { useFetchPosts } from "../hooks/useFetchPosts";
 import { useParams } from "react-router";
 import { useUserContext } from "../context/userContext";

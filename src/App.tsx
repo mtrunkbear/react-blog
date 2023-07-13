@@ -1,17 +1,13 @@
 import "./App.css";
-
-import { MarkdownInput } from "./components/MarkdownInput";
-
-import Posts from "./components/Posts";
 import NavBar from "./components/NavBar";
 import CentralBody from "./components/CentralBody";
 import SideMenu from "./components/SideMenu";
 import Categories from "./components/Categories";
-import { Route, Routes } from "react-router-dom";
 import styled from "@emotion/styled";
 
 import { size as windowSizes } from "./styles/device";
 import useWindowPosition from "./hooks/useWindowPosition";
+import Router from "./pages/router";
 
 function App() {
   const { viewportWidth } = useWindowPosition();
@@ -30,16 +26,8 @@ function App() {
             alignItems: "center",
           }}
         >
-          {!isMobile && <Categories />}
-          {/*TODO: handle routes in a config or something similar to improve cleancode*/}
-          <Routes>
-            <Route path="/:userNickName" element={<Posts />} />
-            <Route path="/" element={<Posts />} />
-            <Route path="/post" element={<Posts />}>
-              <Route path=":id" element={<Posts />} />
-            </Route>
-            <Route path="/write" element={<MarkdownInput />} />
-          </Routes>
+          {!isMobile && <Categories />}         
+          <Router/>
         </div>
         <SideMenu />
       </CentralBody>
