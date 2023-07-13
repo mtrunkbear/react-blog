@@ -21,21 +21,27 @@ const NavBar = () => {
       localStorage.setItem("chakra-ui-color-mode", "dark");
     }
   }, []);
-
   return (
     <Nav>
-      <Title style={{ color: isDark ? undefined : "rgb(0, 120,100" }}>
-        {title}
-      </Title>
+      <a href="/">
+        <Title
+        isDark={isDark}
+          style={{
+            color: isDark ? "white" : "rgb(0, 120,100"
+          }}
+        >
+          {title}
+        </Title>
+      </a>
       <NavElements>
         <IconButton
           aria-label="Toggle Dark Mode"
-        size={"sm"}
+          size={"sm"}
           icon={isDark ? <SunIcon /> : <MoonIcon />}
           onClick={toggleColorMode}
         />
         <Login />
-        <ConfigIcon onClick={()=> navigate("/write")} src={configIcon} />
+        <ConfigIcon onClick={() => navigate("/write")} src={configIcon} />
       </NavElements>
     </Nav>
   );
@@ -69,7 +75,7 @@ const Nav = styled.nav`
   }
 `;
 
-const Title = styled.h1`
+const Title = styled.h1<{isDark:boolean}>`
   font-size: 20px;
 
   @media ${device.mobileS} {
@@ -78,6 +84,11 @@ const Title = styled.h1`
   @media ${device.laptop} {
     font-size: 34px;
   }
+ text-shadow: ${({isDark})=>isDark?"2px 2px 2px rgba(120, 5, 210, 1)":""};
+  transition: all 0.5s linear;
+  &:hover {
+    text-shadow: 2px 2px 2px rgba(84, 227, 70, 1);
+  }
 `;
 
 const NavElements = styled.div`
@@ -85,19 +96,18 @@ const NavElements = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 55%;
-  @media ${device.mobileM}{
+  @media ${device.mobileM} {
     width: 60%;
   }
-  @media ${device.mobileL}{
+  @media ${device.mobileL} {
     width: 50%;
   }
-  @media ${device.mobileXL}{
+  @media ${device.mobileXL} {
     width: 40%;
   }
-  @media ${device.tablet}{
+  @media ${device.tablet} {
     width: 300px;
   }
-  
 `;
 
 const ConfigIcon = styled.img`

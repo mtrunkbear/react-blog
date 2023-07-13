@@ -9,7 +9,7 @@ const AuthorMobileDetail = ({ userId }: any) => {
   const author = users?.find((user) => user.id === userId);
   const navigate = useNavigate();
 
-  if (author)
+  if (author){
     return (
       <AuthorMobileDetailContainer>
         <CircleButton
@@ -20,6 +20,7 @@ const AuthorMobileDetail = ({ userId }: any) => {
         <p style={{fontSize:"12px"}}>{author?.nickName}</p>
       </AuthorMobileDetailContainer>
     );
+  } else {return(<></>)}
 };
 
 const AuthorMobileDetailContainer = styled.div`
