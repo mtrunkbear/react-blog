@@ -197,7 +197,6 @@ const PostContainer = styled(Container)`
   margin-bottom: 50px;
   text-align: left;
   padding: 30px;
-  box-sizing: border-box;
   height: 400px;
 
   text-shadow: none;
