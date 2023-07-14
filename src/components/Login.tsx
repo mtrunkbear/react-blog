@@ -59,15 +59,4 @@ const LoginButton = forwardRef<ButtonProps, "div">(
     </StyledButton>
   )
 );
-
-/* const LoginButton =({
-  onClick,
-  children,
-}: {
-  onClick?: () => void;
-  children: React.ReactNode;
-}) => {
-  return <StyledButton onClick={onClick}>{children}</StyledButton>;
-}; */
-
 export default Login;

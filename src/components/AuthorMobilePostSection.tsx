@@ -6,7 +6,7 @@ import { useUserContext } from "../context/userContext";
 
 const AuthorMobileDetail = ({ userId }: any) => {
   const { users }: any = useUserContext();
-  const author = users?.find((user) => user.id === userId);
+  const author = users?.find((user:any) => user.id === userId);
   const navigate = useNavigate();
 
   if (author){

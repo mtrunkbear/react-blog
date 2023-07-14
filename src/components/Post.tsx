@@ -1,8 +1,9 @@
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { nnfxDark } from "react-syntax-highlighter/dist/esm/styles/hljs";
-import { useRef, forwardRef, useEffect } from "react";
+import { useRef, forwardRef, useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router";
-import guardar from "../assets/guardar.svg";
+import save from "../assets/save.svg";
+import deleteIcon from "../assets/trash.svg";
 
 import ReactMarkdown from "react-markdown";
 import styled from "@emotion/styled";
@@ -14,6 +15,10 @@ import { useFocusedPostContext } from "../context/focusedPostContext";
 import { useColorMode } from "@chakra-ui/react";
 import AuthorMobilePostSection from "./AuthorMobilePostSection";
 import useScrollRestorarion from "../hooks/useScrollRestoration";
+import { useUserContext } from "../context/userContext";
+import ConfirmationModal from "./ConfirmationModal";
+import { deletePost } from "../api/postsAPI";
+import { Container } from "./Container";
 
 const Post = ({
   title,
@@ -24,6 +29,7 @@ const Post = ({
   isFullView = false,
   firstPost,
 }: any) => {
+  const [modalOpen, setModalOpen] = useState(false);
   const { colorMode } = useColorMode();
   const isDark = colorMode === "dark";
   const [focusedPost, setFocusedPost]: any = useFocusedPostContext();
@@ -34,6 +40,8 @@ const Post = ({
   const isNearest: any = useNearestElement(postRef);
   const { viewportWidth } = useWindowPosition();
   const isMobile = viewportWidth <= parseFloat(windowSizes.laptop);
+  const { user } = useUserContext();
+  const isSeenByOwner = user.id == userId;
 
   useEffect(() => {
     if (!focusedPost?.id) {
@@ -65,139 +73,132 @@ const Post = ({
 
   const height = isFullView ? { height: "100%" } : null;
 
+  const handleOnSuccessDelete = () => {
+    alert("Post Eliminado");
+    setModalOpen(false);
+    window.location.href = "/";
+  };
+
   return (
-    <Container
-      ref={postRef}
-      style={{
-        ...style,
-        ...height,
-        ...{ borderColor: !isDark ? "rgb(0, 120,100)" : undefined },
-        //border: isCentral ? "0.01px solid rgba(60, 33, 228, 0.05)" : "2px solid black",
-      }}
-    >
-      {isMobile && !pathname.includes("@") && (
-        <AuthorMobilePostSection userId={userId} />
-      )}
-
-      <TitleContainer>
-        <p
-          style={{
-            fontWeight: 400,
-            fontSize: isMobile ? 18 : 20,
-            color: "rgba(253, 182, 0, 1)",
-          }}
-        >
-          //
-        </p>
-        <p
-          style={{
-            fontWeight: 400,
-            fontSize: isMobile ? 16 : 20,
-            marginLeft: "5px",
-            color: "rgba(84, 227, 70, 0.9)",
-          }}
-        >
-          {title.toUpperCase()}
-        </p>
-        <img
-          src={guardar}
-          style={{ position: "absolute", right: 10 }}
-          width={16}
-        />
-        {
-          <img
-            src={guardar}
-            style={{ position: "absolute", right: 10 }}
-            width={16}
-          />
-        }
-      </TitleContainer>
-
-      <ResultArea
-        isFullView={isFullView}
+    <>
+      <PostContainer
+        ref={postRef}
         style={{
-          background:
-            isNearest &&
-            (isDark
-              ? "linear-gradient( 180deg,rgba(120, 100, 200, 0.1) 60.86%, rgba(217, 217, 217, 0) 100% )"
-              : "linear-gradient( 180deg,rgba(137, 188, 161, 0.2) 60.86%, rgba(217, 217, 217, 0) 100% )"),
+          ...style,
+          ...height,
+          ...{ borderColor: !isDark ? "rgb(0, 120,100)" : undefined },
+          //border: isCentral ? "0.01px solid rgba(60, 33, 228, 0.05)" : "2px solid black",
         }}
-        isDark={isDark}
       >
-        <ReactMarkdown
-          children={displayedContent ? displayedContent : "cargando.."}
-          components={{
-            code({ node, inline, className, children, ...props }) {
-              const match = /language-(\w+)/.exec(className || "");
-              const language = match?.[1];
-              const content = String(children).replace(/\n$/, "");
-              if (inline) {
-                return (
-                  <code className={className} {...props}>
-                    {content}
-                  </code>
-                );
-              } else if (match) {
-                return (
-                  <SyntaxHighlighter
-                    language={language}
-                    style={nnfxDark as any}
-                    PreTag="div"
-                    children={content}
-                    {...props}
-                  />
-                );
-              } else {
-                return (
-                  <code className={className} {...props}>
-                    {content}
-                  </code>
-                );
-              }
-            },
+        {isMobile && !pathname.includes("@") && (
+          <AuthorMobilePostSection userId={userId} />
+        )}
+
+        <TitleContainer>
+          <p
+            style={{
+              fontWeight: 400,
+              fontSize: isMobile ? 18 : 20,
+              color: "rgba(253, 182, 0, 1)",
+            }}
+          >
+            //
+          </p>
+          <p
+            style={{
+              fontWeight: 400,
+              fontSize: isMobile ? 16 : 20,
+              marginLeft: "5px",
+              color: "rgba(84, 227, 70, 0.9)",
+            }}
+          >
+            {title.toUpperCase()}
+          </p>
+          <img
+            src={save}
+            style={{ position: "absolute", right: isSeenByOwner ? 36 : 10 }}
+            width={14}
+          />
+          {isSeenByOwner && (
+            <img
+              src={deleteIcon}
+              style={{ position: "absolute", right: 10 }}
+              width={14}
+              onClick={() => setModalOpen(true)}
+            />
+          )}
+        </TitleContainer>
+
+        <ResultArea
+          isFullView={isFullView}
+          style={{
+            background:
+              isNearest &&
+              (isDark
+                ? "linear-gradient( 180deg,rgba(120, 100, 200, 0.1) 60.86%, rgba(217, 217, 217, 0) 100% )"
+                : "linear-gradient( 180deg,rgba(137, 188, 161, 0.2) 60.86%, rgba(217, 217, 217, 0) 100% )"),
           }}
-        />
-      </ResultArea>
-      {isFullView ? null : (
-        <PostButton onClick={() => navigate("/post/" + id)} />
-      )}
-    </Container>
+          isDark={isDark}
+        >
+          <ReactMarkdown
+            children={displayedContent ? displayedContent : "cargando.."}
+            components={{
+              code({ node, inline, className, children, ...props }) {
+                const match = /language-(\w+)/.exec(className || "");
+                const language = match?.[1];
+                const content = String(children).replace(/\n$/, "");
+                if (inline) {
+                  return (
+                    <code className={className} {...props}>
+                      {content}
+                    </code>
+                  );
+                } else if (match) {
+                  return (
+                    <SyntaxHighlighter
+                      language={language}
+                      style={nnfxDark as any}
+                      PreTag="div"
+                      children={content}
+                      {...props}
+                    />
+                  );
+                } else {
+                  return (
+                    <code className={className} {...props}>
+                      {content}
+                    </code>
+                  );
+                }
+              },
+            }}
+          />
+        </ResultArea>
+        {isFullView ? null : (
+          <PostButton onClick={() => navigate("/post/" + id)} />
+        )}
+      </PostContainer>
+      <ConfirmationModal
+        isOpen={modalOpen}
+        onClose={() => setModalOpen(false)}
+        onSubmit={() =>
+          deletePost({ user, id, callback: handleOnSuccessDelete })
+        }
+      />
+    </>
   );
 };
 
-const containerToRef = forwardRef(
-  ({ className, children, style, key }: any, ref: any) => {
-    return (
-      <div key={key} className={className} ref={ref} style={style}>
-        {children}
-      </div>
-    );
-  }
-);
-const Container = styled(containerToRef)`
-  display: flex;
-  position: relative;
-  flex-direction: column;
-  align-items: center;
-  /* //justify-content: center; */
+const PostContainer = styled(Container)`
   width: 90%;
   padding: 13px;
   font-family: "Lato", sans-serif;
-  background-color: rgba(60, 33, 228, 0.05);
   margin-top: 15px;
   margin-bottom: 50px;
   text-align: left;
   padding: 30px;
-  box-sizing: border-box;
-  border-radius: 40px;
   height: 400px;
-  border-style: solid none none none;
-  border-color: rgba(48, 55, 48);
 
-  transition: all 1250ms cubic-bezier(0.19, 1, 0.22, 1);
-  outline: 0.1px solid;
-  outline-color: rgba(255, 255, 255, 0.05);
-  outline-offset: 0px;
   text-shadow: none;
   cursor: pointer;
   &:hover {
@@ -207,15 +208,9 @@ const Container = styled(containerToRef)`
   @media (${device.mobileS}) {
     height: 300px;
     padding: 0;
-    border-radius: 10px;
     padding-top: 10px;
   }
-  /*   @media (${device.mobileL}) {
-    padding: 0;
-    height: 300px;
-  } */
   @media (${device.tablet}) {
-    border-radius: 40px;
     padding: 20px;
   }
   @media (${device.laptop}) {
@@ -226,7 +221,6 @@ const Container = styled(containerToRef)`
 const ResultArea = styled.div<{
   isFullView: Boolean;
   isDark: Boolean;
-  isMobile: Boolean;
 }>`
   display: flex;
 

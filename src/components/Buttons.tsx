@@ -28,7 +28,7 @@ const ButtonContainer = styled.div<{ size: string | number; style: any }>`
   ${({ style }) => style};
 `;
 
-const Button = styled.button<{ hasOnClick: boolean }>`
+const Button = styled.button<{ hasOnClick: Boolean }>`
   background-color: transparent;
   border-color: transparent;
   padding: 0;
@@ -128,14 +128,14 @@ export const PostButton = ({
   children,
 }: {
   onClick: MouseEventHandler<HTMLButtonElement>;
-  style: CSSProperties;
+  style?: CSSProperties;
   text?: string;
   children?: Element | string;
 }) => {
   return (
     <PostButtonStyle style={style} onClick={onClick}>
       <PostButtonP>
-        {text || children ? text || children : "Ver más"}
+        <>{text || children ? text || children : "Ver más"}</>
       </PostButtonP>
     </PostButtonStyle>
   );
@@ -170,12 +170,11 @@ const CategoriesButtonContainer = styled(LinkStyle)`
   color: rgba(253, 182, 0, 1);
   font-size: 13px;
 
-  @media (max-width: 768px){
+  @media (max-width: 768px) {
     width: 20%;
     font-size: 10px;
-    margin-left:2px;
-    margin-right:2px;
-
+    margin-left: 2px;
+    margin-right: 2px;
   }
 `;
 

@@ -27,7 +27,7 @@ const NavBar = () => {
         <Title
         isDark={isDark}
           style={{
-            color: isDark ? "white" : "rgb(0, 120,100"
+            color: isDark ? "white" : "rgb(0, 120,100)"
           }}
         >
           {title}
@@ -75,7 +75,7 @@ const Nav = styled.nav`
   }
 `;
 
-const Title = styled.h1<{isDark:boolean}>`
+const Title = styled.h1<{isDark:Boolean}>`
   font-size: 20px;
 
   @media ${device.mobileS} {
