@@ -14,7 +14,7 @@ function ConfirmationModal({ isOpen, onClose, onSubmit }: any) {
     <>
       <Modal  isOpen={isOpen} onClose={onClose} isCentered>
         <ModalOverlay />
-        <ModalContent background={"rgba(62, 3, 100, 0.7)"}>
+        <ModalContent background={"rgba(62, 3, 100, 0.9)"}>
           <ModalHeader>
             ¿Estás seguro de que deseas eliminar esta publicación?
           </ModalHeader>

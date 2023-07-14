@@ -18,6 +18,7 @@ import useScrollRestorarion from "../hooks/useScrollRestoration";
 import { useUserContext } from "../context/userContext";
 import ConfirmationModal from "./ConfirmationModal";
 import { deletePost } from "../api/postsAPI";
+import { Container } from "./Container";
 
 const Post = ({
   title,
@@ -80,7 +81,7 @@ const Post = ({
 
   return (
     <>
-      <Container
+      <PostContainer
         ref={postRef}
         style={{
           ...style,
@@ -176,7 +177,7 @@ const Post = ({
         {isFullView ? null : (
           <PostButton onClick={() => navigate("/post/" + id)} />
         )}
-      </Container>
+      </PostContainer>
       <ConfirmationModal
         isOpen={modalOpen}
         onClose={() => setModalOpen(false)}
@@ -188,39 +189,17 @@ const Post = ({
   );
 };
 
-const containerToRef = forwardRef(
-  ({ className, children, style, key }: any, ref: any) => {
-    return (
-      <div key={key} className={className} ref={ref} style={style}>
-        {children}
-      </div>
-    );
-  }
-);
-const Container = styled(containerToRef)`
-  display: flex;
-  position: relative;
-  flex-direction: column;
-  align-items: center;
-  /* //justify-content: center; */
+const PostContainer = styled(Container)`
   width: 90%;
   padding: 13px;
   font-family: "Lato", sans-serif;
-  background-color: rgba(60, 33, 228, 0.05);
   margin-top: 15px;
   margin-bottom: 50px;
   text-align: left;
   padding: 30px;
   box-sizing: border-box;
-  border-radius: 40px;
   height: 400px;
-  border-style: solid none none none;
-  border-color: rgba(48, 55, 48);
 
-  transition: all 1250ms cubic-bezier(0.19, 1, 0.22, 1);
-  outline: 0.1px solid;
-  outline-color: rgba(255, 255, 255, 0.05);
-  outline-offset: 0px;
   text-shadow: none;
   cursor: pointer;
   &:hover {
@@ -230,15 +209,9 @@ const Container = styled(containerToRef)`
   @media (${device.mobileS}) {
     height: 300px;
     padding: 0;
-    border-radius: 10px;
     padding-top: 10px;
   }
-  /*   @media (${device.mobileL}) {
-    padding: 0;
-    height: 300px;
-  } */
   @media (${device.tablet}) {
-    border-radius: 40px;
     padding: 20px;
   }
   @media (${device.laptop}) {
