@@ -10,8 +10,10 @@ import {
   ButtonProps,
 } from "@chakra-ui/react";
 import { ChevronDownIcon } from "@chakra-ui/icons";
+import { useNavigate } from "react-router";
 
 const Login: any = () => {
+  const navigate = useNavigate();
   const { isLoggedIn, handleLogin, handleLogout } = useAuthentication();
   const { user }: any = useUserContext();
   //WIP: user menu when is logged in
@@ -29,7 +31,7 @@ const Login: any = () => {
         </MenuButton>
         <MenuList>
           <MenuItem>Postear</MenuItem>
-          <MenuItem>Configuraciones</MenuItem>
+          <MenuItem onClick={()=>navigate("/settings")}>Configuraciones</MenuItem>
           <MenuItem onClick={handleLogout}>Cerrar Sesion</MenuItem>
         </MenuList>
       </Menu>

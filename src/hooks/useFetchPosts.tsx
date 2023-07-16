@@ -11,7 +11,7 @@ export const useFetchPosts = () => {
         setPosts(data);
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       });
 
   }, []);

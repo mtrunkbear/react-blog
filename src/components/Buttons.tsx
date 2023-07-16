@@ -126,14 +126,16 @@ export const PostButton = ({
   style,
   text,
   children,
+  type,
 }: {
-  onClick: MouseEventHandler<HTMLButtonElement>;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
   style?: CSSProperties;
   text?: string;
   children?: Element | string;
+  type?: "button" | "submit" | "reset";
 }) => {
   return (
-    <PostButtonStyle style={style} onClick={onClick}>
+    <PostButtonStyle style={style} onClick={onClick} type={type}>
       <PostButtonP>
         <>{text || children ? text || children : "Ver más"}</>
       </PostButtonP>

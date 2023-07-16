@@ -57,7 +57,12 @@ const SideMenu = () => {
       : "rgb(157, 188, 191)"
     : undefined;
 
-  if (pathname.includes("write")|| (isMobile && !pathname.includes("@"))) return null;
+  if (
+    pathname.includes("write") ||
+    pathname.includes("settings") ||
+    (isMobile && !pathname.includes("@"))
+  )
+    return null;
   return (
     <SideMenuContainer
       style={{

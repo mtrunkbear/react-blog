@@ -29,15 +29,7 @@ export const useUsers = () => {
       fetchCurrentUser();
     }
   }, [loadingCurrentUser]);
-//WIP:
-  /*  const handleUpdateUser = async (id, userData) => {
-    const updatedUser = await updateUser(id, userData);
-    if (updatedUser) {
-      setUsers((prevUsers) =>
-        prevUsers.map((user) => (user.id === id ? updatedUser : user))
-      );
-    }
-  }; */
+
 
   return {
     users,

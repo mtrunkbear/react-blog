@@ -5,12 +5,13 @@ import next from "../assets/next.png";
 import chatgpt from "../assets/chatgpt.svg";
 import all from "../assets/all.png";
 import { useColorMode } from "@chakra-ui/react";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import styled from "@emotion/styled";
 import { device, size as windowSizes } from "../styles/device";
 import useWindowPosition from "../hooks/useWindowPosition";
 
 const Categories = () => {
+  const { pathname } = useLocation();
   const { viewportWidth } = useWindowPosition();
   const isMobile = viewportWidth <= parseFloat(windowSizes.laptop);
   const navigate = useNavigate();
@@ -23,7 +24,11 @@ const Categories = () => {
     { name: "AI", icon: chatgpt },
     { name: "Todos", icon: all, action: () => navigate("/") },
   ];
-
+  if (
+    pathname.includes("write") ||
+    pathname.includes("settings")
+  )
+    return null;
   return (
     <CategoriesContainer>
       <CategoriesUl>
