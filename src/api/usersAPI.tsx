@@ -17,41 +17,59 @@ export const getUsers = async () => {
   }
 };
 
-//WIP:
-/*
-export const updateUser = async (id, userData) => {
+
+export const updateUser = async (userData) => {
+  const token = localStorage.getItem("token");
   try {
-    const response = await axios.put(`${API_URL}/users/${id}`, userData);
-    return response.data;
+    if (!token) {
+      throw new Error("No token available");
+    }
+    const response = await fetch(`${API_URL}/api/users/me`, {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userData),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("No autorizado");
+        }
+        return response.json();
+      })
+      .then((data) => data);
+    return response;
   } catch (error) {
     console.error("Error al actualizar el usuario:", error);
     return null;
   }
-}; */
+};
 
 export const getCurrentUser = async ({ navigate }: any) => {
   const token = localStorage.getItem("token");
   let userData;
-  if (token) {
-    try {
-      userData = await fetch(`${API_URL}/api/users/me`, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("No autorizado");
-          }
-          return response.json();
-        })
-        .then((data) => data);
-        
-      return userData;
-    } catch (error) {
-      localStorage.removeItem("token");
-      navigate("/", { replace: false });
-      //setToken(undefined);
-      console.error("Error al obtener el usuario actual:", error);
-      return null;
+
+  try {
+    if (!token) {
+      throw new Error("No token available");
     }
+    userData = await fetch(`${API_URL}/api/users/me`, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("No autorizado");
+        }
+        return response.json();
+      })
+      .then((data) => data);
+
+    return userData;
+  } catch (error) {
+    localStorage.removeItem("token");
+    navigate("/", { replace: false });
+    return null;
   }
 };

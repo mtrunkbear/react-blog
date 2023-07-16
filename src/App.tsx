@@ -11,14 +11,13 @@ import useWindowPosition from "./hooks/useWindowPosition";
 import Router from "./pages/router";
 
 function App() {
-  const { pathname } = useLocation();
   const { viewportWidth } = useWindowPosition();
   const isMobile = viewportWidth <= parseFloat(windowSizes.laptop);
 
   return (
     <>
       <NavBar />
-      {isMobile && !pathname.includes("write") && <Categories />}
+      {isMobile && <Categories />}
       <CentralBody>
         <div
           style={{
@@ -28,7 +27,7 @@ function App() {
             alignItems: "center",
           }}
         >
-          {!isMobile&&!pathname.includes("write") && <Categories />}
+          {!isMobile && <Categories />}
           <Router />
         </div>
         <SideMenu />
