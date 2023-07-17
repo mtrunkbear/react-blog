@@ -2,7 +2,7 @@ import EditForm from "../components/EditForm";
 import { Container } from "../components/Container";
 import styled from "@emotion/styled";
 import { device } from "../styles/device";
-import { useUserContext } from "../context/userContext";
+import { useUserContext } from "../context/UserContext";
 
 function Settings() {
   const { user } = useUserContext();

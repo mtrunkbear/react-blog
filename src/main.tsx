@@ -4,9 +4,9 @@ import App from "./App.tsx";
 import "./index.css";
 import theme from "./styles/theme";
 import { ChakraProvider } from "@chakra-ui/react";
-import { UserProvider } from "./context/userContext.tsx";
+import { UserProvider } from "./context/UserContext.tsx";
 import { BrowserRouter } from "react-router-dom";
-import FocusedPostProvider from "./context/focusedPostContext.tsx";
+import FocusedPostProvider from "./context/FocusedPostContext.tsx";
 import { ColorModeScript } from "@chakra-ui/react";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(

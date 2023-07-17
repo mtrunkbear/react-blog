@@ -1,4 +1,4 @@
-import { useUserContext } from "../context/userContext";
+import { useUserContext } from "../context/UserContext";
 import { useAuthentication } from "../hooks/useAuthentication";
 import styled from "@emotion/styled";
 import {

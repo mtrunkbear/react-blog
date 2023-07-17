@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import styled from "@emotion/styled";
-import { useUserContext } from "../context/userContext";
+import { useUserContext } from "../context/UserContext";
 import { PostButton } from "../components/Buttons";
 import MDEditor from "@uiw/react-md-editor";
 import { Input, Spinner } from "@chakra-ui/react";

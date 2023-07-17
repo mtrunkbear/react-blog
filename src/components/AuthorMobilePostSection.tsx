@@ -2,7 +2,7 @@ import { useNavigate } from "react-router";
 import avatar from "../assets/avatar.jpg";
 import { CircleButton } from "./Buttons";
 import styled from "@emotion/styled";
-import { useUserContext } from "../context/userContext";
+import { useUserContext } from "../context/UserContext";
 
 const AuthorMobileDetail = ({ userId }: any) => {
   const { users }: any = useUserContext();
