@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Input as ChakraInput, Textarea, forwardRef } from "@chakra-ui/react";
 import styled from "@emotion/styled";
 import { PostButton } from "./Buttons";
@@ -16,18 +16,23 @@ const EditForm = ({ userData }) => {
     description: userData?.description,
     avatarUrl: userData?.avatarUrl,
   } as any);
+
+  useEffect(() => {
+    setFormData(userData);
+  }, [userData]);
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    const validInputs = handleValidation(formData);
-    if (validInputs) {
+    const isInvalid = handleValidation(formData);
+    if (!isInvalid) {
       const result = updateUser(formData);
     }
   };
   const handleValidation = (data) => {
     const simpleValidation = (value: any) => {
       return !(
-        4 <= data[value].length &&
-        data[value].length < 20 &&
+        4 <= data[value]?.length &&
+        data[value]?.length < 20 &&
         simpleStringRegex.test(data[value])
       );
     };
@@ -40,8 +45,10 @@ const EditForm = ({ userData }) => {
       avatarUrl: !urlRegex.test(data["avatarUrl"]),
     };
     setValidation(validationData);
-
-    return Object.values(validationData).every((value) => value == false);
+    const isInvalid = !Object.values(validationData).every(
+      (value) => value == false
+    );
+    return isInvalid;
   };
   const handleChange = (event) => {
     const data = { ...formData, [event.target.name]: event.target.value };
@@ -81,6 +88,7 @@ const EditForm = ({ userData }) => {
             focusBorderColor="green.300"
             value={formData.description}
             onChange={handleChange}
+            width={"-webkit-fill-available"}
           />
         </FormGroup>
         <PostButton style={{ position: "relative" }} type="submit">
@@ -179,6 +187,7 @@ const Input = forwardRef(
         className={className}
         ref={ref}
         style={style}
+        width={"-webkit-fill-available"}
       />
     );
   }
