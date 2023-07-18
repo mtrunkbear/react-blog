@@ -5,17 +5,18 @@ import { PostButton } from "./Buttons";
 import { simpleStringRegex, urlRegex } from "../utils/regex";
 import { updateUser } from "../api/usersAPI";
 import { useAlertContext } from "../context/AlertContext";
-interface UserData{
-id: string;
-nickName: string;
-firstName: string;
-lastName: string;
-occupation: string;
-description: string;
-avatarUrl: URL;
+
+interface UserData {
+  id: string;
+  nickName: string;
+  firstName: string;
+  lastName: string;
+  occupation: string;
+  description: string;
+  avatarUrl: URL;
 }
-const EditForm = ( userData:UserData ) => {
-  const { showAlert }:any = useAlertContext();
+const EditForm = (userData: UserData) => {
+  const { showAlert }: any = useAlertContext();
   const [validation, setValidation] = useState({});
   const [formData, setFormData] = useState({
     id: userData?.id,
@@ -31,12 +32,16 @@ const EditForm = ( userData:UserData ) => {
     setFormData(userData);
   }, [userData]);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const isInvalid = handleValidation(formData);
     if (!isInvalid) {
-      updateUser(formData);
-      showAlert("Datos modificados con exito!", "success");
+      const result = await updateUser(formData);
+      if (result) {
+        showAlert("Datos modificados con exito!", "success");
+      } else {
+        showAlert("Ups, hubo un error, porfavor intentelo más tarde!", "error");
+      }
     }
   };
   const handleValidation = (data: any) => {

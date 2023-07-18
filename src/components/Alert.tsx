@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import styled from "@emotion/styled";
 import { AlertContext } from "../context/AlertContext";
 import { keyframes } from "@emotion/react";
-import { Alert } from "../types/alertContext.types";
+import { Alert as AlertInterface } from "../types/alertContext.types";
 
 const Alert: React.FC = () => {
   const { alert, hideAlert } = useContext<any>(AlertContext);
@@ -46,7 +46,7 @@ const bounce = keyframes`
   }
 `;
 
-const AlertContainer = styled.div<{ type: Alert["type"] }>`
+const AlertContainer = styled.div<{ type: AlertInterface["type"] }>`
   position: fixed;
   bottom: 0;
   right: 0;
@@ -71,7 +71,7 @@ const CloseButton = styled.button`
   cursor: pointer;
 `;
 
-const getAlertColor = (type: Alert["type"]) => {
+const getAlertColor = (type: AlertInterface["type"]) => {
   switch (type) {
     case "success":
       return "#4caf50";

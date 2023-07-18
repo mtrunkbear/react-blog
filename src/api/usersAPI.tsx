@@ -17,13 +17,13 @@ export const getUsers = async () => {
   }
 };
 
-
-export const updateUser = async (userData) => {
-  const token = localStorage.getItem("token");
+export const updateUser = async (userData: any) => {
   try {
+    const token = localStorage.getItem("token");
     if (!token) {
       throw new Error("No token available");
     }
+
     const response = await fetch(`${API_URL}/api/users/me`, {
       method: "PUT",
       headers: {
@@ -32,18 +32,16 @@ export const updateUser = async (userData) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(userData),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("No autorizado");
-        }
-        return response.json();
-      })
-      .then((data) => data);
-    return response;
+    });
+
+    if (!response.ok) {
+      throw new Error("No autorizado");
+    }
+
+    return true;
   } catch (error) {
     console.error("Error al actualizar el usuario:", error);
-    return null;
+    return false;
   }
 };
 

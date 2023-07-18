@@ -5,7 +5,7 @@ import {
   AlertState,
 } from "../types/alertContext.types";
 
-const AlertContext = createContext<AlertContextProps | undefined>(undefined);
+const AlertContext = createContext<AlertContextProps>({} as any);
 
 const alertReducer = (state: AlertState, action: AlertAction): AlertState => {
   switch (action.type) {
@@ -32,7 +32,7 @@ const AlertProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     showAlert: false,
   });
 
-  const showAlert = (
+  const showAlert: AlertContextProps["showAlert"] = (
     message: string,
     type: "info" | "success" | "warning" | "error" = "info"
   ) => {

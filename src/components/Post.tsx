@@ -1,6 +1,6 @@
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { nnfxDark } from "react-syntax-highlighter/dist/esm/styles/hljs";
-import { useRef, forwardRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router";
 import save from "../assets/save.svg";
 import deleteIcon from "../assets/trash.svg";
@@ -19,6 +19,7 @@ import { useUserContext } from "../context/UserContext";
 import ConfirmationModal from "./ConfirmationModal";
 import { deletePost } from "../api/postsAPI";
 import { Container } from "./Container";
+import { useAlertContext } from "../context/AlertContext";
 
 const Post = ({
   title,
@@ -34,13 +35,14 @@ const Post = ({
   const isDark = colorMode === "dark";
   const [focusedPost, setFocusedPost]: any = useFocusedPostContext();
   const navigate = useNavigate();
+  const { showAlert } = useAlertContext();
   const { pathname } = useLocation();
   useScrollRestorarion(pathname);
   const postRef = useRef<any>(null);
   const isNearest: any = useNearestElement(postRef);
   const { viewportWidth } = useWindowPosition();
   const isMobile = viewportWidth <= parseFloat(windowSizes.laptop);
-  const { user } = useUserContext();
+  const { user }: any = useUserContext();
   const isSeenByOwner = user.id == userId;
 
   useEffect(() => {
@@ -73,10 +75,19 @@ const Post = ({
 
   const height = isFullView ? { height: "100%" } : null;
 
-  const handleOnSuccessDelete = () => {
-    alert("Post Eliminado");
-    setModalOpen(false);
-    window.location.href = "/";
+  const handleDeletePost = async () => {
+    const data = await deletePost({ user, id });
+    if (data) {
+      showAlert("Post eliminado", "success");
+      setModalOpen(false);
+      window.location.href = "/";
+      showAlert("Post eliminado", "success");
+    } else {
+      showAlert(
+        "Ups hubo un error al eliminar su post, porfavor intente mas tarde...",
+        "error"
+      );
+    }
   };
 
   return (
@@ -181,9 +192,7 @@ const Post = ({
       <ConfirmationModal
         isOpen={modalOpen}
         onClose={() => setModalOpen(false)}
-        onSubmit={() =>
-          deletePost({ user, id, callback: handleOnSuccessDelete })
-        }
+        onSubmit={handleDeletePost}
       />
     </>
   );

@@ -9,8 +9,12 @@ import { Container } from "../components/Container";
 import { createPost } from "../api/postsAPI";
 import { device } from "../styles/device";
 import { useAuthentication } from "../hooks/useAuthentication";
+import { useAlertContext } from "../context/AlertContext";
+import { useNavigate } from "react-router";
 
 export default function NewPost() {
+  const navigate = useNavigate();
+  const { showAlert } = useAlertContext();
   const { handleLogin } = useAuthentication();
   const { user }: any = useUserContext();
   const [title, setTitle]: any = useState();
@@ -21,6 +25,19 @@ export default function NewPost() {
       handleLogin();
     }
   }, [user]);
+
+  const handleCreatePost = async () => {
+    const data: any = await createPost({ title, user, content: text });
+    if (data) {
+      showAlert("Post creado con exito!", "success");
+     navigate( "/post/" + data?.id);
+    } else {
+      showAlert(
+        "Ups hubo un error al crear su post, porfavor intente mas tarde...",
+        "error"
+      );
+    }
+  };
 
   if (user.id)
     return (
@@ -49,7 +66,7 @@ export default function NewPost() {
             borderTopLeftRadius: "5px",
             borderTopRightRadius: "5px",
           }}
-          onClick={() => createPost({ title, user, content: text })}
+          onClick={handleCreatePost}
         >
           {"Publicar"}
         </PostButton>
