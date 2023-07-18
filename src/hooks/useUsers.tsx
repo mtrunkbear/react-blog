@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getUsers,/* updateUser, */ getCurrentUser } from "../api/usersAPI";
+import { getUsers, getCurrentUser } from "../api/usersAPI";
 import { useNavigate } from "react-router";
 
 export const useUsers = () => {
@@ -36,6 +36,6 @@ export const useUsers = () => {
     currentUser,
     setCurrentUser,
     loadingCurrentUser,
-    setLoadingCurrentUser /* handleUpdateUser */,
+    setLoadingCurrentUser 
   };
 };

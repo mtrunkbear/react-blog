@@ -4,8 +4,18 @@ import styled from "@emotion/styled";
 import { PostButton } from "./Buttons";
 import { simpleStringRegex, urlRegex } from "../utils/regex";
 import { updateUser } from "../api/usersAPI";
-
-const EditForm = ({ userData }) => {
+import { useAlertContext } from "../context/AlertContext";
+interface UserData{
+id: string;
+nickName: string;
+firstName: string;
+lastName: string;
+occupation: string;
+description: string;
+avatarUrl: URL;
+}
+const EditForm = ( userData:UserData ) => {
+  const { showAlert }:any = useAlertContext();
   const [validation, setValidation] = useState({});
   const [formData, setFormData] = useState({
     id: userData?.id,
@@ -21,14 +31,15 @@ const EditForm = ({ userData }) => {
     setFormData(userData);
   }, [userData]);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const isInvalid = handleValidation(formData);
     if (!isInvalid) {
-      const result = updateUser(formData);
+      updateUser(formData);
+      showAlert("Datos modificados con exito!", "success");
     }
   };
-  const handleValidation = (data) => {
+  const handleValidation = (data: any) => {
     const simpleValidation = (value: any) => {
       return !(
         4 <= data[value]?.length &&
@@ -50,7 +61,11 @@ const EditForm = ({ userData }) => {
     );
     return isInvalid;
   };
-  const handleChange = (event) => {
+  const handleChange = (
+    event:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
     const data = { ...formData, [event.target.name]: event.target.value };
     setFormData(data);
   };
@@ -110,7 +125,7 @@ const FormInputsMapper = ({
 }: any) => {
   return (
     <>
-      {structure.map(({ label, type, key, validationErrorMessage }) => (
+      {structure.map(({ label, type, key, validationErrorMessage }: any) => (
         <FormGroup key={key}>
           <Label>{label}</Label>
           <Input

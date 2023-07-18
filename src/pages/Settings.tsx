@@ -5,8 +5,8 @@ import { device } from "../styles/device";
 import { useUserContext } from "../context/UserContext";
 
 function Settings() {
-  const { user } = useUserContext();
- return (
+  const { user }: any = useUserContext();
+  return (
     <SettingsContainer
       style={{
         paddingTop: "20px",
@@ -16,7 +16,15 @@ function Settings() {
       }}
     >
       <h1 style={{ fontSize: 28, marginBottom: 40 }}>Configuraciones</h1>
-      <EditForm userData={user} />
+      <EditForm
+        id={user?.id}
+        nickName={user?.nickName}
+        firstName={user?.firstName}
+        lastName={user?.lastName}
+        avatarUrl={user?.avatarUrl}
+        occupation={user?.occupation}
+        description={user?.description}
+      />
     </SettingsContainer>
   );
 }

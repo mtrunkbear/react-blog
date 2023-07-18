@@ -1,7 +1,6 @@
 import { createContext,  useContext } from "react";
 import { useUsers } from "../hooks/useUsers";
 
-// Crea un objeto `UserContext` con un valor inicial vacío
 export const UserContext = createContext({});
 
 export const useUserContext = () => useContext(UserContext);

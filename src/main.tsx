@@ -8,11 +8,13 @@ import { UserProvider } from "./context/UserContext.tsx";
 import { BrowserRouter } from "react-router-dom";
 import FocusedPostProvider from "./context/FocusedPostContext.tsx";
 import { ColorModeScript } from "@chakra-ui/react";
+import {  AlertProvider } from "./context/AlertContext.tsx";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <ChakraProvider theme={theme} resetCSS={false} cssVarsRoot="body">
       <ColorModeScript initialColorMode={theme.config.initialColorMode} />
+      <AlertProvider>
       <BrowserRouter>
         <UserProvider>
           <FocusedPostProvider>
@@ -20,6 +22,8 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
           </FocusedPostProvider>
         </UserProvider>
       </BrowserRouter>
+      </AlertProvider>
     </ChakraProvider>
+    
   </React.StrictMode>
 );
