@@ -28,11 +28,14 @@ const SideMenu = () => {
 
   useEffect(() => {
     if (users) {
+      const userNickNameInPath = decodeURIComponent(
+        pathname?.slice(2).toLocaleLowerCase()
+      );
       const userOfNickName =
         pathname &&
         users.find(
           ({ nickName }: any) =>
-            nickName.toLowerCase() === pathname?.slice(2).toLocaleLowerCase() &&
+            nickName.toLowerCase() === userNickNameInPath &&
             nickName.toLowerCase() !== ""
         );
       if (userOfNickName) {

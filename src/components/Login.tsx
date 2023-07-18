@@ -16,7 +16,6 @@ const Login: any = () => {
   const navigate = useNavigate();
   const { isLoggedIn, handleLogin, handleLogout } = useAuthentication();
   const { user }: any = useUserContext();
-  //WIP: user menu when is logged in
 
   if (!isLoggedIn) {
     return <LoginButton onClick={handleLogin}>{"Iniciar sesión"}</LoginButton>;
@@ -30,8 +29,13 @@ const Login: any = () => {
           </>
         </MenuButton>
         <MenuList>
-          <MenuItem>Postear</MenuItem>
-          <MenuItem onClick={()=>navigate("/settings")}>Configuraciones</MenuItem>
+          <MenuItem onClick={() => navigate("/@" + user.nickName)}>
+            Perfil
+          </MenuItem>
+          <MenuItem onClick={() => navigate("/write")}>Postear</MenuItem>
+          <MenuItem onClick={() => navigate("/settings")}>
+            Configuraciones
+          </MenuItem>
           <MenuItem onClick={handleLogout}>Cerrar Sesion</MenuItem>
         </MenuList>
       </Menu>
