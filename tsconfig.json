@@ -19,6 +19,6 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src","assets/*.jpg", "assets/*.jpeg", "assets/*.png","assets/*.svg"],
+  "include": [["src/**/*"],"assets/*.jpg", "assets/*.jpeg", "assets/*.png","assets/*.svg"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

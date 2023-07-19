@@ -4,10 +4,11 @@ import ArticlesMenu from "./ArticlesMenu";
 import { device, size as windowSizes } from "../styles/device";
 import { useFocusedPostContext } from "../context/FocusedPostContext";
 import { useUserContext } from "../context/UserContext";
-import { useEffect, useState } from "react";
+
 import { useLocation } from "react-router";
 import { useColorMode } from "@chakra-ui/react";
 import useWindowPosition from "../hooks/useWindowPosition";
+import useActualUser from "../hooks/useActualUser";
 
 const SideMenu = () => {
   const { viewportWidth } = useWindowPosition();
@@ -17,39 +18,8 @@ const SideMenu = () => {
   const { pathname } = useLocation();
   const { users }: any = useUserContext();
   const [focusedPost]: any = useFocusedPostContext();
-  const [actualUser, setActualUser] = useState({
-    firstName: "",
-    lastName: "",
-    occupation: "",
-    description: "",
-    id: "",
-    nickName: "",
-  });
 
-  useEffect(() => {
-    if (users) {
-      const userNickNameInPath = decodeURIComponent(
-        pathname?.slice(2).toLocaleLowerCase()
-      );
-      const userOfNickName =
-        pathname &&
-        users.find(
-          ({ nickName }: any) =>
-            nickName.toLowerCase() === userNickNameInPath &&
-            nickName.toLowerCase() !== ""
-        );
-      if (userOfNickName) {
-        setActualUser(userOfNickName);
-      } else if (users && focusedPost) {
-        const userOfFocusedPost = users.find(
-          ({ id }: any) => id == focusedPost.userId
-        );
-        if (userOfFocusedPost) {
-          setActualUser(userOfFocusedPost);
-        }
-      }
-    }
-  }, [focusedPost, users, pathname]);
+  const actualUser = useActualUser(users, focusedPost, pathname);
 
   const { firstName, lastName, occupation, description, id, nickName } =
     actualUser;

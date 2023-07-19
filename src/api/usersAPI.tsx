@@ -67,7 +67,6 @@ export const getCurrentUser = async ({ navigate }: any) => {
     return userData;
   } catch (error) {
     localStorage.removeItem("token");
-    navigate("/", { replace: false });
     return null;
   }
 };
