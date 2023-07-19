@@ -45,7 +45,7 @@ export const updateUser = async (userData: any) => {
   }
 };
 
-export const getCurrentUser = async ({ navigate }: any) => {
+export const getCurrentUser = async () => {
   const token = localStorage.getItem("token");
   let userData;
 
