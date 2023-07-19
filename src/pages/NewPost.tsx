@@ -54,7 +54,7 @@ export default function NewPost() {
           }}
         />
         <div style={{ width: "100%" }}>
-          <MDEditor height={600} value={text} onChange={setText} />
+          <MDEditor height={600} value={text} onChange={setText as any} />
         </div>
 
         <PostButton
