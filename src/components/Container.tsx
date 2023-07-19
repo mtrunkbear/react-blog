@@ -1,5 +1,5 @@
 import { forwardRef } from "@chakra-ui/react";
-import { device, size as windowSizes } from "../styles/device";
+import { device } from "../styles/device";
 import styled from "@emotion/styled";
 
 const containerToRef = forwardRef(

@@ -1,14 +1,8 @@
 import React, {
   CSSProperties,
   MouseEventHandler,
-  StyleHTMLAttributes,
 } from "react";
 import styled from "@emotion/styled";
-import {
-  StyleFunctionProps,
-  StyleObjectOrFn,
-  StyleProps,
-} from "@chakra-ui/react";
 
 interface CircleButtonProps {
   text?: string | undefined;

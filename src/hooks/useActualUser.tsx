@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const useActualUser = (users, focusedPost, pathname) => {
+const useActualUser = (users:any, focusedPost:any, pathname:any) => {
   const [actualUser, setActualUser] = useState({
     firstName: "",
     lastName: "",
@@ -17,7 +17,7 @@ const useActualUser = (users, focusedPost, pathname) => {
       const userOfNickName =
         pathname &&
         users.find(
-          ({ nickName }) =>
+          ({ nickName }:any) =>
             nickName.toLowerCase() === userNickNameInPath &&
             nickName.toLowerCase() !== ""
         );
@@ -25,7 +25,7 @@ const useActualUser = (users, focusedPost, pathname) => {
         setActualUser(userOfNickName);
       } else if (users && focusedPost) {
         const userOfFocusedPost = users.find(
-          ({ id }) => id === focusedPost.userId
+          ({ id }:any) => id === focusedPost.userId
         );
         if (userOfFocusedPost) {
           setActualUser(userOfFocusedPost);

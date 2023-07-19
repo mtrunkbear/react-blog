@@ -1,9 +1,7 @@
 import { useState, useEffect } from "react";
 import { getUsers, getCurrentUser } from "../api/usersAPI";
-import { useNavigate } from "react-router";
 
 export const useUsers = () => {
-  const navigate = useNavigate();
   const [users, setUsers] = useState();
   const [currentUser, setCurrentUser] = useState({});
   const [loadingCurrentUser, setLoadingCurrentUser] = useState(true);
