@@ -176,9 +176,13 @@ const Post = ({
                   );
                 } else {
                   return (
-                    <code className={className} {...props}>
-                      {content}
-                    </code>
+                    <SyntaxHighlighter
+                      language={"text"}
+                      style={nnfxDark as any}
+                      PreTag="div"
+                      children={content}
+                      {...props}
+                    />
                   );
                 }
               },
@@ -240,6 +244,7 @@ const ResultArea = styled.div<{
   border-radius: 24px;
 
   width: 100%;
+  max-width: 800px;
   height: 90%;
   border: none;
   text-align: left;
