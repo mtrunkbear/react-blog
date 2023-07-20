@@ -71,6 +71,7 @@ const Post = ({
       ")"
     : truncatedContent;
 
+
   const displayedContent = isFullView ? content : truncatedWithImage;
 
   const height = isFullView ? { height: "100%" } : null;
@@ -98,7 +99,6 @@ const Post = ({
           ...style,
           ...height,
           ...{ borderColor: !isDark ? "rgb(0, 120,100)" : undefined },
-          //border: isCentral ? "0.01px solid rgba(60, 33, 228, 0.05)" : "2px solid black",
         }}
       >
         {isMobile && !pathname.includes("@") && (
@@ -257,10 +257,10 @@ const ResultArea = styled.div<{
   img {
     position: relative;
     max-width: 100%;
-    max-height: ${({ isFullView }) => (isFullView ? "100%" : "20%")};
-    /*  max-height: 20%;  */
+    max-height: ${({ isFullView }) => (isFullView ? "100%" : "40%")};
     width: 100%;
     object-fit: cover;
+    object-position: 0 0;
   }
   @media (${device.mobileS}) {
     font-size: 14px;
