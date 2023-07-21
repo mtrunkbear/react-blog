@@ -2,7 +2,7 @@
     "rewrites": [{ "source": "/(.*)", "destination": "/" }],
     "crons": [
         {
-          "path": "/api/hello",
+          "path": "/api/refresh-render",
           "schedule": "*/10 * * * *"
         }
       ]
