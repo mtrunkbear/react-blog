@@ -7,7 +7,7 @@ export const config = {
 const API_URL = process.env["VITE_API_URL"];
 
 async function refresh() {
-  const res = await fetch("API_URL");
+  const res = await fetch(API_URL);
   return res.ok;
 }
 
