@@ -34,7 +34,7 @@ const Categories = () => {
       <CategoriesUl>
         {categories.map(({ name, icon, action }: any) => (
           <CategoriesButton
-            onClick={() => action()}
+            onClick={() => action&&action()}
             key={name}
             filterColor={isDark ? "violet" : "green"}
             style={

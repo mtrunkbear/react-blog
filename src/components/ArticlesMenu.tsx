@@ -30,7 +30,7 @@ const ArticlesMenu = () => {
             width={"100%"}
             href={`/post/${post.id}`}
           >
-            {post?.title}
+            {post?.title.slice(0, 36) + (post?.title?.length > 35 ? "...":"")}
           </LinkStyle>
         </p>
       ))}
