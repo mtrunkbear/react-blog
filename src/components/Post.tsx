@@ -100,6 +100,7 @@ const Post = ({
           ...height,
           ...{ borderColor: !isDark ? "rgb(0, 120,100)" : undefined },
         }}
+        isInPostPath={pathname.includes("/post")}
       >
         {isMobile && !pathname.includes("@") && (
           <AuthorMobilePostSection userId={userId} />
@@ -118,12 +119,12 @@ const Post = ({
           <p
             style={{
               fontWeight: 400,
-              fontSize: isMobile ? 16 : 20,
+              fontSize: isMobile ? 16 : 16,
               marginLeft: "5px",
               color: "rgba(84, 227, 70, 0.9)",
             }}
           >
-            {title.toUpperCase()}
+            {title.toUpperCase().slice(0,90)}
           </p>
           <img
             src={save}
@@ -215,7 +216,7 @@ const PostContainer = styled(Container)`
   text-shadow: none;
   cursor: pointer;
   &:hover {
-    text-shadow: 1px 1px 2px rgba(84, 227, 70, 1);
+    text-shadow: ${({isInPostPath})=> isInPostPath? "":"1px 1px 2px rgba(84, 227, 70, 1)"} ;
   }
 
   @media (${device.mobileS}) {
