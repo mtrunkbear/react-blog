@@ -21,7 +21,7 @@ const SideMenu = () => {
 
   const actualUser = useActualUser(users, focusedPost, pathname);
 
-  const { firstName, lastName, occupation, description, id, nickName } =
+  const { firstName, lastName, occupation, description, id, nickName, avatarUrl } =
     actualUser;
 
   const sideMenuContainerBackgroundColor = !isMobile
@@ -50,6 +50,7 @@ const SideMenu = () => {
         description={description}
         nickName={nickName}
         id={id}
+        avatarUrl={avatarUrl}
       />
       {!isMobile && <ArticlesMenu />}
     </SideMenuContainer>

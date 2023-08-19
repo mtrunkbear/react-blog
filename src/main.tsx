@@ -24,6 +24,5 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
       </BrowserRouter>
       </AlertProvider>
     </ChakraProvider>
-    
   </React.StrictMode>
 );

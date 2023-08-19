@@ -1,6 +1,6 @@
 import { CircleButton, LinkStyle } from "./Buttons";
 import { useNavigate } from "react-router";
-import avatar from "../assets/avatar.jpg";
+import avatar from "../assets/avatar.png";
 import githubIcon from "../assets/github.svg";
 import linkedinIcon from "../assets/linkedin.svg";
 import styled from "@emotion/styled";
@@ -16,6 +16,7 @@ const AutorDetail = ({
   occupation,
   description,
   id,
+  avatarUrl,
 }: any) => {
   const { viewportWidth } = useWindowPosition();
   const isMobile = viewportWidth <= parseFloat(windowSizes.laptop);
@@ -27,7 +28,9 @@ const AutorDetail = ({
     <AutorStyle
       style={{
         backgroundColor: isDark
-          ?isMobile? "rgba(82, 5, 133, 0.1)":"rgba(82, 5, 133, 0.4)"
+          ? isMobile
+            ? "rgba(82, 5, 133, 0.1)"
+            : "rgba(82, 5, 133, 0.4)"
           : "rgba(82, 109, 130,0.8)",
       }}
     >
@@ -37,7 +40,7 @@ const AutorDetail = ({
         </MailIconContainer>
         <CircleButton
           onClick={() => navigate("/@" + nickName)}
-          image={avatar}
+          image={avatarUrl || avatar}
           size={isMobile ? 30 : 80}
         />
         <div>
@@ -176,28 +179,22 @@ const AutorStyle = styled.div`
     border-radius: 32px;
   }
 `;
-const ProfileContainer  = styled.div`
-
-@media ${device.mobileS}{
-
-  display: flex;
-  flex-direction: row;
-  height: 150px;
-  align-items: flex-start;
-  justify-content: space-evenly;
-  width: 90%;
-  margin-top:10px;
-
-
-}
-@media ${device.laptop}{
-  flex-direction: column;
-  magin-top:0;
-  align-items: center;
-height: 80%;
-}
-
-
+const ProfileContainer = styled.div`
+  @media ${device.mobileS} {
+    display: flex;
+    flex-direction: row;
+    height: 150px;
+    align-items: flex-start;
+    justify-content: space-evenly;
+    width: 90%;
+    margin-top: 10px;
+  }
+  @media ${device.laptop} {
+    flex-direction: column;
+    magin-top: 0;
+    align-items: center;
+    height: 80%;
+  }
 `;
 
 export default AutorDetail;
