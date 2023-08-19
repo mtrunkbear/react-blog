@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Input as ChakraInput, Textarea, forwardRef } from "@chakra-ui/react";
 import styled from "@emotion/styled";
 import { PostButton } from "./Buttons";
-import { simpleStringRegex, urlRegex } from "../utils/regex";
+import { simpleStringRegex, isValidURL } from "../utils/validations";
 import { updateUser } from "../api/usersAPI";
 import { useAlertContext } from "../context/AlertContext";
 
@@ -34,38 +34,17 @@ const EditForm = (userData: UserData) => {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const isInvalid = handleValidation(formData);
+    const isInvalid = handleValidation(formData, setValidation);
     if (!isInvalid) {
-      const result = await updateUser(formData);
-      if (result) {
+      const isUpdated = await updateUser(formData);
+      if (isUpdated) {
         showAlert("Datos modificados con exito!", "success");
       } else {
         showAlert("Ups, hubo un error, porfavor intentelo más tarde!", "error");
       }
     }
   };
-  const handleValidation = (data: any) => {
-    const simpleValidation = (value: any) => {
-      return !(
-        4 <= data[value]?.length &&
-        data[value]?.length < 20 &&
-        simpleStringRegex.test(data[value])
-      );
-    };
 
-    const validationData = {
-      nickName: simpleValidation("nickName"),
-      firstName: simpleValidation("firstName"),
-      lastName: simpleValidation("lastName"),
-      occupation: simpleValidation("occupation"),
-      avatarUrl: !urlRegex.test(data["avatarUrl"]),
-    };
-    setValidation(validationData);
-    const isInvalid = !Object.values(validationData).every(
-      (value) => value == false
-    );
-    return isInvalid;
-  };
   const handleChange = (
     event:
       | React.ChangeEvent<HTMLInputElement>
@@ -120,6 +99,29 @@ const EditForm = (userData: UserData) => {
 };
 
 export default EditForm;
+
+const handleValidation = (data: any, setValidation: any) => {
+  const simpleValidation = (value: any) => {
+    return !(
+      4 <= data[value]?.length &&
+      data[value]?.length < 20 &&
+      simpleStringRegex.test(data[value])
+    );
+  };
+
+  const validationData = {
+    nickName: simpleValidation("nickName"),
+    firstName: simpleValidation("firstName"),
+    lastName: simpleValidation("lastName"),
+    occupation: simpleValidation("occupation"),
+    avatarUrl: !isValidURL(data["avatarUrl"]),
+  };
+  setValidation(validationData);
+  const isInvalid = !Object.values(validationData).every(
+    (value) => value == false
+  );
+  return isInvalid;
+};
 
 const FormInputsMapper = ({
   structure,

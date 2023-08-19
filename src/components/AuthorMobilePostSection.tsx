@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router";
-import avatar from "../assets/avatar.jpg";
+import avatar from "../assets/avatar.png";
 import { CircleButton } from "./Buttons";
 import styled from "@emotion/styled";
 import { useUserContext } from "../context/UserContext";
