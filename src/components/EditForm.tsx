@@ -149,7 +149,7 @@ const FormInputsMapper = ({
               {" "}
               {validationErrorMessage
                 ? validationErrorMessage
-                : `Debe ingresar un ${label.toLowerCase()} valido`}
+                : `Debe ingresar un ${label.toLowerCase()} valido, entre 3 y 20 caracteres`}
             </P>
           )}
         </FormGroup>
