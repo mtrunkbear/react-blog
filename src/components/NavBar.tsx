@@ -23,7 +23,7 @@ const NavBar = () => {
   }, []);
   return (
     <Nav>
-      <a href="/">
+      <a style={{cursor: "pointer"}} onClick={()=> navigate("/")}>
         <Title
         isDark={isDark}
           style={{
