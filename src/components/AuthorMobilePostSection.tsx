@@ -14,7 +14,7 @@ const AuthorMobileDetail = ({ userId }: any) => {
       <AuthorMobileDetailContainer>
         <CircleButton
           onClick={() => navigate("/@" + author?.nickName)}
-          image={avatar}
+          image={author.avatarUrl || avatar}
           size={16}
         />
         <p style={{fontSize:"12px"}}>{author?.nickName}</p>

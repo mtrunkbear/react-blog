@@ -10,18 +10,20 @@ const useActualUser = (users: any, focusedPost: any, pathname: any) => {
     nickName: "",
     avatarUrl: "",
   });
+
   useEffect(() => {
-    if (users) {
+    console.log(users,pathname,focusedPost,actualUser)
+    if (users && pathname) {
       const userNickNameInPath = decodeURIComponent(
         pathname?.slice(2).toLocaleLowerCase()
       );
-      const userOfNickName =
-        pathname &&
-        users.find(
-          ({ nickName }: any) =>
-            nickName.toLowerCase() === userNickNameInPath &&
-            nickName.toLowerCase() !== ""
-        );
+      console.log({userNickNameInPath})
+      const userOfNickName = users.find(
+        ({ nickName }: any) =>
+          nickName.trim().toLowerCase() === userNickNameInPath &&
+          nickName.trim().toLowerCase() !== ""
+      );
+      console.log({userOfNickName});
       if (userOfNickName) {
         setActualUser(userOfNickName);
       } else if (users && focusedPost) {

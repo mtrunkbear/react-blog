@@ -84,8 +84,6 @@ const AutorDetail = ({
           <p
             style={{ fontSize: "12px", fontWeight: 200, textAlign: "justify" }}
           >
-            {/*  Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates
-          autem recusandae accusamus alias tempore enim cupiditate consequuntur */}
             {description?.slice(0, 180)}
           </p>
         </div>
@@ -94,7 +92,7 @@ const AutorDetail = ({
       <SocialMedia />
     </AutorStyle>
   ) : (
-    <>"Cargando..."</>
+    <>Cargando...</>
   );
 };
 
